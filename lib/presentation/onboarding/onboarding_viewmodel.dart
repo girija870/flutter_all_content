@@ -86,8 +86,7 @@ abstract class OnBoardingViewModelInputs {
   void goPrevious(); // when user clicks on left arrow or swipe  right
   void onPageChanged(int index);
 
-  Sink
-      get inputSliderViewObject; // this is the way to add data to the stream ..stream input
+  Sink get inputSliderViewObject; // this is the way to add data to the stream ..stream input
 }
 
 //outputs mean data or results that will be sent from our view model to our view
