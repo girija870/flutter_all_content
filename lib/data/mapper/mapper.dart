@@ -1,6 +1,6 @@
 import 'package:flut_all_content/app/extension.dart';
 import 'package:flut_all_content/data/response/response.dart';
-import 'package:flut_all_content/domain/model.dart';
+import 'package:flut_all_content/domain/model/model.dart';
 
 const empty = "";
 const zero = 0;

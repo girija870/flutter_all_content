@@ -1,13 +1,14 @@
 import 'package:flut_all_content/presentation/onboarding/onboarding_viewmodel.dart';
 import 'package:flut_all_content/presentation/resources/assets_manager.dart';
 import 'package:flut_all_content/presentation/resources/color_manager.dart';
+import 'package:flut_all_content/presentation/resources/routes_manager.dart';
 import 'package:flut_all_content/presentation/resources/strings_manager.dart';
 import 'package:flut_all_content/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../domain/model.dart';
+import '../../domain/model/model.dart';
 
 class OnBoardingView extends StatefulWidget {
   const OnBoardingView({Key? key}) : super(key: key);
@@ -79,7 +80,9 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, Routes.loginRoute);
+                  },
                   child: Text(
                     AppStrings.skip,
                     style: Theme.of(context).textTheme.subtitle2,

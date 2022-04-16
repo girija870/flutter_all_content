@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flut_all_content/domain/model.dart';
+import 'package:flut_all_content/domain/model/model.dart';
 import 'package:flut_all_content/presentation/base/base_view_model.dart';
 
 import '../resources/assets_manager.dart';

@@ -15,4 +15,10 @@ class AppStrings {
       "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees. #4";
 
   static const String skip = "Skip";
+
+  static const String userName = "username";
+  static const String userNameError = "userNameError";
+  static const String password = "password";
+  static const String passwordError = "passwordError";
+  static const String login = "login";
 }

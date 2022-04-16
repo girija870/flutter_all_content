@@ -4,8 +4,8 @@ import 'package:flut_all_content/data/mapper/mapper.dart';
 import 'package:flut_all_content/data/network/failure.dart';
 import 'package:flut_all_content/data/network/network_info.dart';
 import 'package:flut_all_content/data/request/request.dart';
-import 'package:flut_all_content/domain/model.dart';
-import 'package:flut_all_content/domain/repository.dart';
+import 'package:flut_all_content/domain/model/model.dart';
+import 'package:flut_all_content/domain/repository/repository.dart';
 
 import '../network/error_handler.dart';
 
