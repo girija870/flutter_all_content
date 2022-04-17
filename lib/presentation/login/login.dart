@@ -4,6 +4,7 @@ import 'package:flut_all_content/presentation/resources/routes_manager.dart';
 import 'package:flut_all_content/presentation/resources/strings_manager.dart';
 import 'package:flut_all_content/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../app/di.dart';
 import 'login_viewmodel.dart';
@@ -90,6 +91,7 @@ class _LoginViewState extends State<LoginView> {
                           return TextFormField(
                             keyboardType: TextInputType.visiblePassword,
                             controller: _passwordController,
+                            textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
                                 hintText: AppStrings.password,
                                 labelText: AppStrings.password,

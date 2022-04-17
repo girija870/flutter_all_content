@@ -2,22 +2,22 @@ import 'package:flut_all_content/app/extension.dart';
 import 'package:flut_all_content/data/response/response.dart';
 import 'package:flut_all_content/domain/model/model.dart';
 
-const empty = "";
-const zero = 0;
+const EMPTY = "";
+const ZERO = 0;
 
 extension CustomerResponseMapper on CustomerResponse? {
   Customer toDomain() {
     return Customer(
-        this?.id?.orEmpty() ?? empty,
-        this?.name?.orEmpty() ?? empty,
-        this?.noOfNotification?.orZero() ?? zero);
+        this?.id?.orEmpty() ?? EMPTY,
+        this?.name?.orEmpty() ?? EMPTY,
+        this?.noOfNotification?.orZero() ?? ZERO);
   }
 }
 
 extension ContactResponseMapper on ContactsResponse? {
   Contacts toDomain() {
-    return Contacts(this?.email?.orEmpty() ?? empty,
-        this?.phone?.orEmpty() ?? empty, this?.link?.orEmpty() ?? empty);
+    return Contacts(this?.email?.orEmpty() ?? EMPTY,
+        this?.phone?.orEmpty() ?? EMPTY, this?.link?.orEmpty() ?? EMPTY);
   }
 }
 
