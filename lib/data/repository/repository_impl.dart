@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:flut_all_content/data/data_source/remote_data_source.dart';
 import 'package:flut_all_content/data/mapper/mapper.dart';
@@ -34,6 +36,7 @@ class RepositoryImpl implements Repository {
               response.message ?? ResponseMessage.DEFAULT));
         }
       } catch (error) {
+        log("catchError::$error");
         return (Left(ErrorHandler.handle(error).failure));
       }
     } else {

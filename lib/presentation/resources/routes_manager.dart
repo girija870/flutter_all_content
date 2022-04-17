@@ -8,6 +8,8 @@ import 'package:flut_all_content/presentation/splash/splash.dart';
 import 'package:flut_all_content/presentation/store_details/store_details.dart';
 import 'package:flutter/material.dart';
 
+import '../../app/di.dart';
+
 class Routes {
   static const String splashRoute = "/";
   static const String onBoardingRoute = "/onBoarding";
@@ -28,6 +30,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const OnBoardingView());
 
       case Routes.loginRoute:
+        initLoginModule();
         return MaterialPageRoute(builder: (_) => const LoginView());
 
       case Routes.registerRoute:

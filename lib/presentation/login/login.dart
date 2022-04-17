@@ -5,6 +5,7 @@ import 'package:flut_all_content/presentation/resources/strings_manager.dart';
 import 'package:flut_all_content/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 
+import '../../app/di.dart';
 import 'login_viewmodel.dart';
 
 class LoginView extends StatefulWidget {
@@ -15,8 +16,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final LoginViewModel _loginViewModel =
-      LoginViewModel(null); //todo pass here login useCase
+  final LoginViewModel _loginViewModel = instance<LoginViewModel>();
 
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
