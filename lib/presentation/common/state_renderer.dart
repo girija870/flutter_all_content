@@ -1,5 +1,4 @@
 import 'package:flut_all_content/data/mapper/mapper.dart';
-import 'package:flut_all_content/data/network/failure.dart';
 import 'package:flut_all_content/presentation/resources/assets_manager.dart';
 import 'package:flut_all_content/presentation/resources/color_manager.dart';
 import 'package:flut_all_content/presentation/resources/font_manager.dart';
@@ -23,12 +22,12 @@ enum StateRendererType {
 }
 
 class StateRenderer extends StatelessWidget {
-  StateRendererType stateRendererType;
-  String message;
-  String title;
-  Function? retryActionFunction;
+  final StateRendererType stateRendererType;
+  final String message;
+  final String title;
+  final Function? retryActionFunction;
 
-  StateRenderer(
+  const StateRenderer(
       {Key? key,
       required this.stateRendererType,
       String? message,

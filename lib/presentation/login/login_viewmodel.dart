@@ -4,6 +4,8 @@ import 'dart:developer';
 import 'package:flut_all_content/domain/usecase/login_usecase.dart';
 import 'package:flut_all_content/presentation/base/base_view_model.dart';
 import 'package:flut_all_content/presentation/common/freezed_data_classes.dart';
+import 'package:flut_all_content/presentation/common/state_renderer.dart';
+import 'package:flut_all_content/presentation/common/state_renderer_impl.dart';
 
 class LoginViewModel extends BaseViewModel
     with LoginViewModelInputs, LoginViewModelOutputs {
@@ -28,7 +30,10 @@ class LoginViewModel extends BaseViewModel
   }
 
   @override
-  void start() {}
+  void start() {
+    //view tels state renderer ,please show the content of the screen
+    inputState.add(ContentState());
+  }
 
   @override
   Sink get inputPassword => _passwordStreamController.sink;
@@ -41,16 +46,22 @@ class LoginViewModel extends BaseViewModel
 
   @override
   login() async {
+    inputState.add(
+        LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _loginUseCase?.execute(
             LoginUseCaseInput(loginObject.userName, loginObject.password)))
         ?.fold(
             (failure) => {
                   //left -> failure
-                  log(failure.message)
+                  inputState.add(ErrorState(
+                      stateRendererType: StateRendererType.POPUP_LOADING_STATE,
+                      message: failure.message))
                 },
             (data) => {
                   // right -> success
-                  log(data.customer.name)
+                  log(data.customer.name),
+                  //navigate to main screen after login
+                  inputState.add(ContentState())
                 });
   }
 
