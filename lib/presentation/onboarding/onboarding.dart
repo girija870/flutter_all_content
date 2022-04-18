@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../app/app_prefs.dart';
+import '../../app/di.dart';
 import '../../domain/model/model.dart';
 
 class OnBoardingView extends StatefulWidget {
@@ -20,8 +22,10 @@ class OnBoardingView extends StatefulWidget {
 class _OnBoardingViewState extends State<OnBoardingView> {
   PageController _pageController = PageController();
   final OnBoardingViewModel _onBoardingViewModel = OnBoardingViewModel();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
 
   _bind() {
+    _appPreferences.setOnBoardingScreenViewed();
     _onBoardingViewModel.start();
   }
 

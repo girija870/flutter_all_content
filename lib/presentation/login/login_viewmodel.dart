@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flut_all_content/domain/usecase/login_usecase.dart';
 import 'package:flut_all_content/presentation/base/base_view_model.dart';
@@ -15,6 +14,9 @@ class LoginViewModel extends BaseViewModel
       String>.broadcast(); //broadcast does many subscriber can lister from one streamController
   final StreamController _isAllInputsValidStreamController =
       StreamController<void>.broadcast();
+
+  final StreamController isUserLoggedInSuccessfullyStreamController =
+      StreamController<bool>();
 
   var loginObject = LoginObject("", "");
   final LoginUseCase? _loginUseCase; //todo remove?
@@ -54,14 +56,15 @@ class LoginViewModel extends BaseViewModel
             (failure) => {
                   //left -> failure
                   inputState.add(ErrorState(
-                      stateRendererType: StateRendererType.POPUP_LOADING_STATE,
+                      stateRendererType: StateRendererType.POPUP_ERROR_STATE,
                       message: failure.message))
                 },
-            (data) => {
+            (data){
                   // right -> success
-                  log(data.customer.name),
+                  inputState.add(ContentState());
                   //navigate to main screen after login
-                  inputState.add(ContentState())
+
+                  isUserLoggedInSuccessfullyStreamController.add(true);
                 });
   }
 

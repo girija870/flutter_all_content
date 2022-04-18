@@ -22,7 +22,7 @@ class AppStrings {
   static const String forgotPassword = "forgotPassword";
   static const String passwordError = "passwordError";
   static const String login = "login";
-  static const String registerText = "register";
+  static const String registerText = "signUp";
   static const String loading = "loading";
   static const String retryAgain = "Retry Again";
   static const String ok = "Ok";

@@ -1,3 +1,4 @@
+import 'package:flut_all_content/app/app_prefs.dart';
 import 'package:flut_all_content/presentation/common/state_renderer_impl.dart';
 import 'package:flut_all_content/presentation/resources/assets_manager.dart';
 import 'package:flut_all_content/presentation/resources/color_manager.dart';
@@ -5,6 +6,7 @@ import 'package:flut_all_content/presentation/resources/routes_manager.dart';
 import 'package:flut_all_content/presentation/resources/strings_manager.dart';
 import 'package:flut_all_content/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 import '../../app/di.dart';
@@ -19,6 +21,7 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final LoginViewModel _loginViewModel = instance<LoginViewModel>();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
 
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -30,6 +33,15 @@ class _LoginViewState extends State<LoginView> {
         () => _loginViewModel.setUserName(_userNameController.text));
     _passwordController.addListener(
         () => _loginViewModel.setPassword(_passwordController.text));
+
+    //navigate to main screen
+    _loginViewModel.isUserLoggedInSuccessfullyStreamController.stream
+        .listen((isLoggedInSuccess) {
+      SchedulerBinding.instance?.addPostFrameCallback((_) {
+        _appPreferences.setUserLoggedIn();
+        Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+      });
+    });
   }
 
   @override
@@ -82,6 +94,7 @@ class _LoginViewState extends State<LoginView> {
                     builder: (context, snapshot) {
                       return TextFormField(
                         keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
                         controller: _userNameController,
                         decoration: InputDecoration(
                             hintText: AppStrings.userName,
@@ -102,7 +115,6 @@ class _LoginViewState extends State<LoginView> {
                       return TextFormField(
                         keyboardType: TextInputType.visiblePassword,
                         controller: _passwordController,
-                        textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
                             hintText: AppStrings.password,
                             labelText: AppStrings.password,
@@ -151,13 +163,15 @@ class _LoginViewState extends State<LoginView> {
                           style: Theme.of(context).textTheme.subtitle2),
                     ),
                     TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(
-                            context, Routes.registerRoute);
-                      },
-                      child: Text(AppStrings.registerText,
-                          style: Theme.of(context).textTheme.subtitle2),
-                    )
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                              context, Routes.registerRoute);
+                        },
+                        child: FittedBox(
+                          fit: BoxFit.cover,
+                          child: Text(AppStrings.registerText,
+                              style: Theme.of(context).textTheme.subtitle2),
+                        ))
                   ],
                 ),
               ),

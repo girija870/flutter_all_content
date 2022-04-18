@@ -6,7 +6,7 @@ abstract class BaseViewModel extends BaseViewModelInputs
     with BaseViewModelOutputs {
   //shared variables and functions that will be used through any view model
   final StreamController _inputStateStreamController =
-      StreamController<FlowState>();
+      StreamController<FlowState>.broadcast();
 
   @override
   // TODO: implement inputState
@@ -19,7 +19,7 @@ abstract class BaseViewModel extends BaseViewModelInputs
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    _inputStateStreamController.close();
   }
 }
 

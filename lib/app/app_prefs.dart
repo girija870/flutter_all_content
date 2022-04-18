@@ -1,7 +1,9 @@
 import 'package:flut_all_content/presentation/resources/language_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const String PRESS_KEY_LANG = "press_key_lang";
+const String PRESS_KEY_LANG = "PRESS_KEY_LANG";
+const String PRESS_KEY_ONBOARDING_SCREEN = "PRESS_KEY_ONBOARDING_SCREEN";
+const String PRESS_KEY_IS_USER_LOGGED_IN = "PRESS_KEY_IS_USER_LOGGED_IN";
 
 class AppPreferences {
   final SharedPreferences _sharedPreferences;
@@ -15,5 +17,21 @@ class AppPreferences {
     } else {
       return LanguageType.ENGLISH.getValue();
     }
+  }
+
+  Future<void> setOnBoardingScreenViewed() async {
+    _sharedPreferences.setBool(PRESS_KEY_ONBOARDING_SCREEN, true);
+  }
+
+  Future<bool> isOnBoardingScreenViewed() async {
+    return _sharedPreferences.getBool(PRESS_KEY_ONBOARDING_SCREEN) ?? false;
+  }
+
+  Future<void> setUserLoggedIn() async {
+    _sharedPreferences.setBool(PRESS_KEY_IS_USER_LOGGED_IN, true);
+  }
+
+  Future<bool> isIsUserLoggedIn() async {
+    return _sharedPreferences.getBool(PRESS_KEY_IS_USER_LOGGED_IN) ?? false;
   }
 }
