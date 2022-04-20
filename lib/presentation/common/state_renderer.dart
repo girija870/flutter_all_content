@@ -128,24 +128,25 @@ class StateRenderer extends StatelessWidget {
 
   Widget _getRetryButton(String buttonTitle, BuildContext context) {
     return Center(
-        child: Padding(
-      padding: const EdgeInsets.all(AppPadding.p18),
-      child: SizedBox(
-        width: AppSize.s180,
-        child: ElevatedButton(
-            onPressed: () {
-              if (stateRendererType ==
-                  StateRendererType.FULL_SCREEN_ERROR_STATE) {
-                retryActionFunction
-                    ?.call(); //to call the api function again to retry
-              } else {
-                Navigator.of(context)
-                    .pop(); // popup the error state so we need to dismiss the dialog
-              }
-            },
-            child: Text(buttonTitle)),
+      child: Padding(
+        padding: const EdgeInsets.all(AppPadding.p18),
+        child: SizedBox(
+          width: AppSize.s180,
+          child: ElevatedButton(
+              onPressed: () {
+                if (stateRendererType ==
+                    StateRendererType.FULL_SCREEN_ERROR_STATE) {
+                  retryActionFunction
+                      ?.call(); //to call the api function again to retry
+                } else {
+                  Navigator.of(context)
+                      .pop(); // popup the error state so we need to dismiss the dialog
+                }
+              },
+              child: Text(buttonTitle)),
+        ),
       ),
-    ));
+    );
   }
 
   Widget _getItemInColumn(List<Widget> children) {

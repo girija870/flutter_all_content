@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:flut_all_content/app/functions.dart';
+import 'package:flut_all_content/data/network/failure.dart';
 import 'package:flut_all_content/domain/usecase/forgot_password_usecase.dart';
 import 'package:flut_all_content/presentation/base/base_view_model.dart';
+import 'package:flut_all_content/presentation/common/state_renderer.dart';
+import 'package:flut_all_content/presentation/common/state_renderer_impl.dart';
 
 class ForgotPasswordViewModel extends BaseViewModel
     with ForgotPasswordViewModelInputs, ForgotPasswordViewModelOutputs {
@@ -18,7 +21,7 @@ class ForgotPasswordViewModel extends BaseViewModel
   ForgotPasswordViewModel(this._forgotPasswordUseCase); //inputs
   @override
   void start() {
-    // TODO: implement start
+    inputState.add(ContentState());
   }
 
   @override
@@ -28,9 +31,15 @@ class ForgotPasswordViewModel extends BaseViewModel
   }
 
   @override
-  void resetPassword() async {
+  void forgotPassword() async {
+    inputState.add(LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _forgotPasswordUseCase.execute(email))
-        .fold((failure) => () {}, (data) => () {});
+        .fold((failure) => () {
+          inputState.add(ErrorState(stateRendererType: StateRendererType.POPUP_ERROR_STATE,
+          message: failure.message));
+    }, (data) => () {
+
+    });
   }
 
   @override
@@ -66,7 +75,7 @@ class ForgotPasswordViewModel extends BaseViewModel
 abstract class ForgotPasswordViewModelInputs {
   void setEmail(String email);
 
-  void resetPassword();
+  void forgotPassword();
 
   Sink get inputEmail;
 

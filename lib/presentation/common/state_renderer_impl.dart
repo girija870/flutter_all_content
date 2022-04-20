@@ -1,7 +1,6 @@
 import 'package:flut_all_content/data/mapper/mapper.dart';
 import 'package:flut_all_content/presentation/common/state_renderer.dart';
 import 'package:flut_all_content/presentation/resources/strings_manager.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 abstract class FlowState {
