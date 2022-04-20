@@ -1,4 +1,3 @@
-import 'package:flut_all_content/data/mapper/mapper.dart';
 import 'package:flut_all_content/presentation/forgot_password/forgot_password_viewmodel.dart';
 import 'package:flut_all_content/presentation/resources/assets_manager.dart';
 import 'package:flut_all_content/presentation/resources/strings_manager.dart';
@@ -59,7 +58,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
               Padding(
                   padding: const EdgeInsets.only(
                       left: AppPadding.p28, right: AppPadding.p28),
-                  child: StreamBuilder<String>(
+                  child: StreamBuilder<bool>(
                     stream: _forgotPasswordViewModel.outputsEmailValid,
                     builder: (context, snapshot) {
                       return TextFormField(
@@ -68,7 +67,9 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                         decoration: InputDecoration(
                             hintText: AppStrings.email,
                             labelText: AppStrings.email,
-                            errorText: snapshot.data),
+                            errorText: (snapshot.data ?? true)
+                                ? null
+                                : AppStrings.emailError),
                       );
                     },
                   )),
@@ -76,17 +77,18 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
               Padding(
                   padding: const EdgeInsets.only(
                       left: AppPadding.p28, right: AppPadding.p28),
-                  child: StreamBuilder<String>(
+                  child: StreamBuilder<bool>(
                       stream: _forgotPasswordViewModel.isOutputsValid,
                       builder: (context, snapshot) {
                         return SizedBox(
                           width: double.infinity,
                           height: AppSize.s40,
                           child: ElevatedButton(
-                            onPressed:
-                                (snapshot.data!.isNotEmpty) ? () {
-                              _forgotPasswordViewModel.resetPassword();
-                                } : null,
+                            onPressed: (snapshot.data ?? false)
+                                ? () {
+                                    _forgotPasswordViewModel.resetPassword();
+                                  }
+                                : null,
                             child: const Text(AppStrings.resetPassword),
                           ),
                         );

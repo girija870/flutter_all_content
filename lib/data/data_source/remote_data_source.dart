@@ -1,11 +1,10 @@
-import 'package:dio/dio.dart';
 import 'package:flut_all_content/data/network/app_api.dart';
 import 'package:flut_all_content/data/request/request.dart';
 import 'package:flut_all_content/data/response/response.dart';
 
 abstract class RemoteDataSource {
   Future<AuthenticationResponse> login(LoginRequest loginRequest);
-  Future<Response> resetPassword(String email);
+  Future<ForgotPasswordResponse> forgotPassword(String email);
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -20,8 +19,7 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   }
 
   @override
-  Future<Response> resetPassword(String email) {
-    // TODO: implement resetPassword
-    throw UnimplementedError();
+  Future<ForgotPasswordResponse> forgotPassword(String email) async{
+    return await _appServiceClient.forgotPassword(email);
   }
 }

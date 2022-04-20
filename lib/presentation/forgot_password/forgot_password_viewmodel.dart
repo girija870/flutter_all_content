@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flut_all_content/data/mapper/mapper.dart';
+import 'package:flut_all_content/app/functions.dart';
 import 'package:flut_all_content/domain/usecase/forgot_password_usecase.dart';
 import 'package:flut_all_content/presentation/base/base_view_model.dart';
 
@@ -36,7 +36,7 @@ class ForgotPasswordViewModel extends BaseViewModel
   @override
   void setEmail(String email) {
     inputEmail.add(email);
-    email = email;
+    this.email = email;
     _isValid();
   }
 
@@ -47,31 +47,19 @@ class ForgotPasswordViewModel extends BaseViewModel
   Sink get isInputValid => _isFormValidStreamController.sink;
 
   @override
-  Stream<String> get outputsEmailValid =>
-      _emailController.stream.map((email) => _isEmailValid(email));
+  Stream<bool> get outputsEmailValid =>
+      _emailController.stream.map((email) => isEmailValid(email));
 
   @override
-  Stream<String> get isOutputsValid =>
+  Stream<bool> get isOutputsValid =>
       _isFormValidStreamController.stream.map((_) => _isFromInputValid());
 
   _isValid() {
     isInputValid.add(null);
   }
 
-  String _isFromInputValid() {
-    return _isEmailValid(email);
-  }
-
-  String _isEmailValid(String email) {
-    if (email.isEmpty) {
-      return "empty*";
-    } else {
-      RegExp regExp = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-      if (!regExp.hasMatch(email)) {
-        return "invalid*";
-      }
-      return EMPTY;
-    }
+  bool _isFromInputValid() {
+    return isEmailValid(email);
   }
 }
 
@@ -86,7 +74,7 @@ abstract class ForgotPasswordViewModelInputs {
 }
 
 abstract class ForgotPasswordViewModelOutputs {
-  Stream<String> get outputsEmailValid;
+  Stream<bool> get outputsEmailValid;
 
-  Stream<String> get isOutputsValid;
+  Stream<bool> get isOutputsValid;
 }

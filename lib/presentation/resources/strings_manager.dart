@@ -19,7 +19,7 @@ class AppStrings {
   static const String userName = "username";
   static const String userNameError = "userNameError";
   static const String email = "email";
-  static const String emailError = "emailError";
+  static const String emailError = "inValid";
   static const String password = "password";
   static const String forgotPassword = "forgotPassword";
   static const String passwordError = "passwordError";

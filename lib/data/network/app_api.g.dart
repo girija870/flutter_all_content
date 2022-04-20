@@ -10,7 +10,7 @@ part of 'app_api.dart';
 
 class _AppServiceClient implements AppServiceClient {
   _AppServiceClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'https://cleancodearch.mocklab.io/';
+    baseUrl ??= 'https://cleancodearch.mocklab.io';
   }
 
   final Dio _dio;
@@ -36,6 +36,22 @@ class _AppServiceClient implements AppServiceClient {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = AuthenticationResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ForgotPasswordResponse> forgotPassword(email) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'email': email};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ForgotPasswordResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/customers/forgotPassword',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ForgotPasswordResponse.fromJson(_result.data!);
     return value;
   }
 
