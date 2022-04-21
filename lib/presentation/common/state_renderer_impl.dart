@@ -64,6 +64,20 @@ class EmptyState extends FlowState {
       StateRendererType.EMPTY_SCREEN_STATE;
 }
 
+//success state
+class SuccessState extends FlowState {
+  String message;
+
+  SuccessState(this.message);
+
+  @override
+  String getMessage() => message;
+
+  @override
+  StateRendererType getStateRendererType() =>
+      StateRendererType.POPUP_SUCCESS_STATE;
+}
+
 extension FlowStateExtension on FlowState {
   Widget getScreenWidget(BuildContext context, Widget contentScreenWidget,
       Function retryActionFunction) {
@@ -87,7 +101,6 @@ extension FlowStateExtension on FlowState {
         }
 
       case ErrorState:
-
         {
           dismissDialog(context);
           if (getStateRendererType() == StateRendererType.POPUP_ERROR_STATE) {
@@ -117,6 +130,18 @@ extension FlowStateExtension on FlowState {
               message: getMessage(),
               retryActionFunction: retryActionFunction);
         }
+      case SuccessState:
+        {
+          //first need to check previous(loading) dialog is exists or not if exist then dismiss
+          dismissDialog(context);
+
+          //show dialog box
+          showPopUp(
+              context, StateRendererType.POPUP_SUCCESS_STATE, getMessage(),
+              title: AppStrings.succcess);
+          //return content UI of the screen other wise it will show dialog with black background
+          return contentScreenWidget;
+        }
       default:
         {
           return contentScreenWidget;
@@ -133,13 +158,15 @@ extension FlowStateExtension on FlowState {
   _isThereCurrentDialogShowing(BuildContext context) =>
       ModalRoute.of(context)?.isCurrent != true;
 
-  showPopUp(BuildContext context, StateRendererType stateRendererType,
-      String message) {
+  showPopUp(
+      BuildContext context, StateRendererType stateRendererType, String message,
+      {String title = EMPTY}) {
     WidgetsBinding.instance?.addPostFrameCallback((_) => showDialog(
         context: context,
         builder: (BuildContext context) => StateRenderer(
             stateRendererType: stateRendererType,
             message: message,
+            title: title,
             retryActionFunction: () {})));
   }
 }

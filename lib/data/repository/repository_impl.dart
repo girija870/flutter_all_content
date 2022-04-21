@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:flut_all_content/data/data_source/remote_data_source.dart';
 import 'package:flut_all_content/data/mapper/mapper.dart';
@@ -43,12 +45,13 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, ForgotPassword>> forgotPassword(String email) async {
+  Future<Either<Failure, String>> forgotPassword(String email) async {
     if (await _networkInfo.isConnected) {
       try {
         final response = await _remoteDataSource.forgotPassword(email);
         if (response.status == ApiInternalStatus.SUCCESS) {
           return Right(response.toDomain());
+
         } else {
           return Left(Failure(response.status ?? ApiInternalStatus.FAILURE,
               response.message ?? ResponseMessage.DEFAULT));

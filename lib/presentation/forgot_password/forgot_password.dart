@@ -5,6 +5,7 @@ import 'package:flut_all_content/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/di.dart';
+import '../common/state_renderer_impl.dart';
 
 class ForgotPasswordView extends StatefulWidget {
   const ForgotPasswordView({Key? key}) : super(key: key);
@@ -41,8 +42,15 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _getContentWidget(),
-    );
+        body: StreamBuilder<FlowState>(
+      stream: _forgotPasswordViewModel.outputState,
+      builder: (context, snapshot) {
+        return snapshot.data?.getScreenWidget(context, _getContentWidget(), () {
+              _forgotPasswordViewModel.forgotPassword();
+            }) ??
+            _getContentWidget();
+      },
+    ));
   }
 
   Widget _getContentWidget() {
@@ -86,7 +94,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                           child: ElevatedButton(
                             onPressed: (snapshot.data ?? false)
                                 ? () {
-                                    _forgotPasswordViewModel.resetPassword();
+                                    _forgotPasswordViewModel.forgotPassword();
                                   }
                                 : null,
                             child: const Text(AppStrings.resetPassword),
@@ -100,7 +108,9 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                     top: AppPadding.p8,
                     bottom: AppPadding.p28),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _forgotPasswordViewModel.forgotPassword();
+                  },
                   child: Text(AppStrings.didNotReceiveEmail,
                       style: Theme.of(context).textTheme.subtitle2),
                 ),

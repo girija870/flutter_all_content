@@ -12,13 +12,13 @@ enum StateRendererType {
   //popup state
   POPUP_LOADING_STATE,
   POPUP_ERROR_STATE,
+  POPUP_SUCCESS_STATE,
 
   //full screen state
   FULL_SCREEN_LOADING_STATE,
   FULL_SCREEN_ERROR_STATE,
   CONTENT_SCREEN_STATE, //the ui of the screen
-  EMPTY_SCREEN_STATE // empty view when we receive no data from api side for list screen
-
+  EMPTY_SCREEN_STATE, // empty view when we receive no data from api side for list screen
 }
 
 class StateRenderer extends StatelessWidget {
@@ -47,9 +47,18 @@ class StateRenderer extends StatelessWidget {
       case StateRendererType.POPUP_LOADING_STATE:
         return _getPopUpDialog(
             context, [_getAnimatedWidget(JsonAssets.loading)]);
+
       case StateRendererType.POPUP_ERROR_STATE:
         return _getPopUpDialog(context, [
           _getAnimatedWidget(JsonAssets.error),
+          _getMessage(message),
+          _getRetryButton(AppStrings.ok, context)
+        ]);
+
+      case StateRendererType.POPUP_SUCCESS_STATE:
+        return _getPopUpDialog(context, [
+          _getAnimatedWidget(JsonAssets.success),
+          _getMessage(title),
           _getMessage(message),
           _getRetryButton(AppStrings.ok, context)
         ]);
@@ -70,6 +79,7 @@ class StateRenderer extends StatelessWidget {
       case StateRendererType.EMPTY_SCREEN_STATE:
         return _getItemInColumn(
             [_getAnimatedWidget(JsonAssets.empty), _getMessage(message)]);
+
       default:
         return Container();
     }
