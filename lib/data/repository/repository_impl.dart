@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:flut_all_content/data/data_source/remote_data_source.dart';
 import 'package:flut_all_content/data/mapper/mapper.dart';
@@ -50,8 +48,9 @@ class RepositoryImpl implements Repository {
       try {
         final response = await _remoteDataSource.forgotPassword(email);
         if (response.status == ApiInternalStatus.SUCCESS) {
+          //return data success(200)
+          //return right
           return Right(response.toDomain());
-
         } else {
           return Left(Failure(response.status ?? ApiInternalStatus.FAILURE,
               response.message ?? ResponseMessage.DEFAULT));
@@ -60,6 +59,31 @@ class RepositoryImpl implements Repository {
         return (Left(ErrorHandler.handle(error).failure));
       }
     } else {
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Authentication>> register(
+      RegisterRequest registerRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _remoteDataSource.register(registerRequest);
+        if (response.status == ApiInternalStatus.SUCCESS) {
+          return Right(response.toDomain());
+        } else {
+          //return biz logic error
+          //return left
+          return Left(Failure(response.status ?? ApiInternalStatus.FAILURE,
+              response.message ?? ResponseMessage.DEFAULT));
+        }
+      } catch (error) {
+        //return Dio and other customization error
+        //return left
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      //return connection error
       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }

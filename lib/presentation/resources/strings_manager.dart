@@ -30,5 +30,7 @@ class AppStrings {
   static const String retryAgain = "Retry Again";
   static const String ok = "Ok";
   static const String didNotReceiveEmail = "Didn't receive email ? Resend";
-  static const String succcess = "Success";
+  static const String success = "Success";
+
+  static const String mobileNumber = "Mobile Number";
 }

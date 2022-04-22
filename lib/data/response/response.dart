@@ -79,3 +79,4 @@ class ForgotPasswordResponse extends BaseResponse {
 //to json
   Map<String, dynamic> toJson() => _$ForgotPasswordResponseToJson(this);
 }
+

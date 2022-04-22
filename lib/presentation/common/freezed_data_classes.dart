@@ -6,3 +6,14 @@ part 'freezed_data_classes.freezed.dart';
 class LoginObject with _$LoginObject {
   factory LoginObject(String userName, String password) = _LoginObject;
 }
+
+@freezed
+class RegisterViewObject with _$RegisterViewObject {
+  factory RegisterViewObject(
+      String userName,
+      String countryMobileCode,
+      String email,
+      String password,
+      String mobileNumber,
+      String profilePicture) = _RegisterViewObject;
+}

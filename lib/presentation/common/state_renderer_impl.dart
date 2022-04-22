@@ -138,7 +138,7 @@ extension FlowStateExtension on FlowState {
           //show dialog box
           showPopUp(
               context, StateRendererType.POPUP_SUCCESS_STATE, getMessage(),
-              title: AppStrings.succcess);
+              title: AppStrings.success);
           //return content UI of the screen other wise it will show dialog with black background
           return contentScreenWidget;
         }
