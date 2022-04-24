@@ -20,7 +20,7 @@ class RegisterUseCase
         input.email,
         input.password,
         input.mobileNumber,
-        input.profilePicture));
+        ""));
   }
 }
 

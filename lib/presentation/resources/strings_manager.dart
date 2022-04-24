@@ -25,7 +25,7 @@ class AppStrings {
   static const String passwordError = "passwordError";
   static const String resetPassword = "Reset Password";
   static const String login = "login";
-  static const String registerText = "signUp";
+  static const String registerText = "Register";
   static const String loading = "loading";
   static const String retryAgain = "Retry Again";
   static const String ok = "Ok";
@@ -33,4 +33,13 @@ class AppStrings {
   static const String success = "Success";
 
   static const String mobileNumber = "Mobile Number";
+  static const String alreadyHaveAnAccount = "Already Have An Account? Login";
+  static const String profilePicture = "Profile Picture";
+  static const String photoGalley = "Gallery";
+  static const String photoCamera = "Camera";
+
+  static const String home = "Home";
+  static const String search = "Search";
+  static const String notification  = "Notification";
+  static const String settings = "Settings";
 }

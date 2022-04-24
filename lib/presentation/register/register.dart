@@ -1,14 +1,23 @@
+import 'dart:io';
+
+import 'package:country_code_picker/country_code_picker.dart';
+import 'package:flut_all_content/app/app_prefs.dart';
 import 'package:flut_all_content/presentation/common/state_renderer_impl.dart';
 import 'package:flut_all_content/presentation/register/register_viewmodel.dart';
 import 'package:flut_all_content/presentation/resources/assets_manager.dart';
 import 'package:flut_all_content/presentation/resources/color_manager.dart';
+import 'package:flut_all_content/presentation/resources/routes_manager.dart';
 import 'package:flut_all_content/presentation/resources/strings_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../app/di.dart';
 import '../common/widget.dart';
 import '../resources/values_manager.dart';
+
+const String INITIAL_SELECTED = '+977';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -19,15 +28,15 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   final RegisterViewModel _registerViewModel = instance<RegisterViewModel>();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
+  ImagePicker picker = instance<ImagePicker>();
 
   final TextEditingController _userNameController = TextEditingController();
-  final TextEditingController _countryMobileCodeController =
-      TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _mobileNumberController = TextEditingController();
 
-  final _formKey = GlobalKey<FormState>();
+  // final _formKey = GlobalKey<FormState>();
 
   _bind() {
     _registerViewModel.start();
@@ -36,15 +45,24 @@ class _RegisterViewState extends State<RegisterView> {
     });
 
     _emailController.addListener(() {
-      _registerViewModel.setUserName(_emailController.text);
+      _registerViewModel.setEmail(_emailController.text);
     });
 
     _passwordController.addListener(() {
-      _registerViewModel.setUserName(_passwordController.text);
+      _registerViewModel.setPassword(_passwordController.text);
     });
 
     _mobileNumberController.addListener(() {
-      _registerViewModel.setUserName(_mobileNumberController.text);
+      _registerViewModel.setMobileNumber(_mobileNumberController.text);
+    });
+
+    _registerViewModel.isUserRegisteredSuccessfullyStreamController.stream
+        .listen((isRegisteredSuccess) {
+      //navigate to main screen
+      SchedulerBinding.instance?.addPostFrameCallback((_) {
+        _appPreferences.setUserLoggedIn();
+        Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+      });
     });
   }
 
@@ -83,14 +101,13 @@ class _RegisterViewState extends State<RegisterView> {
 
   Widget _getContentWidget() {
     return Container(
-      padding: const EdgeInsets.only(top: AppPadding.p100),
+      padding: const EdgeInsets.only(top: AppPadding.p8),
       child: SingleChildScrollView(
         child: Form(
-          key: _formKey,
+          // key: _formKey,
           child: Column(
             children: [
-              const Center(
-                  child: Image(image: AssetImage(ImagesAssets.splashLogo))),
+              const Image(image: AssetImage(ImagesAssets.splashLogo)),
               const SizedBox(height: AppSize.s28),
               Padding(
                   padding: const EdgeInsets.only(
@@ -108,6 +125,51 @@ class _RegisterViewState extends State<RegisterView> {
                       );
                     },
                   )),
+              const SizedBox(height: AppSize.s28),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: AppPadding.p28, right: AppPadding.p28),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          flex: 1,
+                          child: CountryCodePicker(
+                            onInit: (_) {
+                              _registerViewModel
+                                  .setCountryMobileCode(INITIAL_SELECTED);
+                            },
+                            initialSelection: INITIAL_SELECTED,
+                            favorite: const ['+39', '+33', '+977'],
+                            showCountryOnly: true,
+                            hideMainText: true,
+                            showOnlyCountryWhenClosed: true,
+                            onChanged: (country) {
+                              //update view model with selected code
+                              _registerViewModel.setCountryMobileCode(
+                                  country.dialCode ?? INITIAL_SELECTED);
+                            },
+                          )),
+                      Expanded(
+                        flex: 3,
+                        child: StreamBuilder<String?>(
+                          stream: _registerViewModel.outputErrorMobileNumber,
+                          builder: (context, snapshot) {
+                            return CustomTextFormField(
+                              labelText: AppStrings.mobileNumber,
+                              snapshot: snapshot,
+                              keyboardType: TextInputType.text,
+                              hintText: AppStrings.mobileNumber,
+                              errorText: snapshot.data,
+                              controller: _mobileNumberController,
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               const SizedBox(height: AppSize.s28),
               Padding(
                   padding: const EdgeInsets.only(
@@ -144,25 +206,129 @@ class _RegisterViewState extends State<RegisterView> {
                   )),
               const SizedBox(height: AppSize.s28),
               Padding(
-                  padding: const EdgeInsets.only(
-                      left: AppPadding.p28, right: AppPadding.p28),
-                  child: StreamBuilder<String?>(
-                    stream: _registerViewModel.outputErrorMobileNumberV,
-                    builder: (context, snapshot) {
-                      return CustomTextFormField(
-                        labelText: AppStrings.mobileNumber,
-                        snapshot: snapshot,
-                        keyboardType: TextInputType.text,
-                        hintText: AppStrings.mobileNumber,
-                        errorText: snapshot.data,
-                        controller: _mobileNumberController,
-                      );
+                padding: const EdgeInsets.only(
+                    left: AppPadding.p28, right: AppPadding.p28),
+                child: Container(
+                  height: AppSize.s40,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(AppSize.s8),
+                      border: Border.all(color: ColorManager.grey)),
+                  child: GestureDetector(
+                    child: _getMediaWidget(),
+                    onTap: () {
+                      _showPicker(context);
                     },
-                  )),
+                  ),
+                ),
+              ),
+              const SizedBox(height: AppSize.s28),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: AppPadding.p28, right: AppPadding.p28),
+                child: StreamBuilder<bool>(
+                  stream: _registerViewModel.outputIsAllInputValid,
+                  builder: (context, snapshot) {
+                    return SizedBox(
+                      width: double.infinity,
+                      height: AppSize.s40,
+                      child: ElevatedButton(
+                          onPressed: (snapshot.data ?? false)
+                              ? () {
+                                  _registerViewModel.register();
+                                }
+                              : null,
+                          child: const Text(AppStrings.registerText)),
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: AppPadding.p28,
+                    right: AppPadding.p28,
+                    top: AppPadding.p8,
+                    bottom: AppPadding.p28),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, Routes.loginRoute);
+                  },
+                  child: Text(AppStrings.alreadyHaveAnAccount,
+                      style: Theme.of(context).textTheme.subtitle2),
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget _getMediaWidget() {
+    return Padding(
+      padding: const EdgeInsets.only(left: AppPadding.p8, right: AppPadding.p8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Flexible(child: Text(AppStrings.profilePicture)),
+          Flexible(
+            child: StreamBuilder<File?>(
+              stream: _registerViewModel.outputIsProfilePictureValid,
+              builder: (context, snapshot) {
+                return _imagePickedByUser(snapshot.data);
+              },
+            ),
+          ),
+          Flexible(child: SvgPicture.asset(ImagesAssets.photoCameraIc)),
+        ],
+      ),
+    );
+  }
+
+  Widget _imagePickedByUser(File? image) {
+    if (image != null && image.path.isNotEmpty) {
+      return Image.file(image);
+    } else {
+      return Container();
+    }
+  }
+
+  _showPicker(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SafeArea(
+              child: Wrap(
+            children: [
+              ListTile(
+                trailing: const Icon(Icons.arrow_forward),
+                leading: const Icon(Icons.camera),
+                title: const Text(AppStrings.photoGalley),
+                onTap: () {
+                  _imageFormGallery();
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                trailing: const Icon(Icons.arrow_forward),
+                leading: const Icon(Icons.camera_alt_rounded),
+                title: const Text(AppStrings.photoCamera),
+                onTap: () {
+                  _imageFormCamera();
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          ));
+        });
+  }
+
+  _imageFormGallery() async {
+    var image = await picker.pickImage(source: ImageSource.gallery);
+    _registerViewModel.setProfilePicture(File(image?.path ?? ""));
+  }
+
+  _imageFormCamera() async {
+    var image = await picker.pickImage(source: ImageSource.camera);
+    _registerViewModel.setProfilePicture(File(image?.path ?? ""));
   }
 }

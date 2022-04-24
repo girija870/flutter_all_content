@@ -28,6 +28,9 @@ class RegisterViewModel extends BaseViewModel
   final StreamController _allInputsValidStreamController =
       StreamController<void>.broadcast();
 
+  final StreamController isUserRegisteredSuccessfullyStreamController =
+      StreamController<bool>();
+
   final RegisterUseCase _registerUseCase;
 
   var registerViewObject = RegisterViewObject("", "", "", "", "", "");
@@ -48,6 +51,7 @@ class RegisterViewModel extends BaseViewModel
     _mobileNumberStreamController.close();
     _profilePictureStreamController.close();
     _allInputsValidStreamController.close();
+    isUserRegisteredSuccessfullyStreamController.close();
     super.dispose();
   }
 
@@ -71,14 +75,16 @@ class RegisterViewModel extends BaseViewModel
                 },
             (authenticationData) => {
                   //right-> success
-                  inputState.add(ContentState())
+                  inputState.add(ContentState()),
 
                   //navigate to main screen
+                  isUserRegisteredSuccessfullyStreamController.add(true),
                 });
   }
 
   @override
   setUserName(String userName) {
+    inputUserName.add(userName);
     if (_isUserNameValid(userName)) {
       //update data to register_view object with userName
       registerViewObject = registerViewObject.copyWith(userName: userName);
@@ -104,6 +110,7 @@ class RegisterViewModel extends BaseViewModel
 
   @override
   setEmail(String email) {
+    inputEmail.add(email);
     if (isEmailValid(email)) {
       //update data to register_view object with email
       registerViewObject = registerViewObject.copyWith(email: email);
@@ -116,6 +123,8 @@ class RegisterViewModel extends BaseViewModel
 
   @override
   setPassword(String password) {
+    inputPassword.add(password);
+
     if (_isPasswordValid(password)) {
       //update data to register_view object with password
       registerViewObject = registerViewObject.copyWith(password: password);
@@ -128,6 +137,7 @@ class RegisterViewModel extends BaseViewModel
 
   @override
   setMobileNumber(String mobileNumber) {
+    inputMobileNumber.add(mobileNumber);
     if (_isMobileNumberValid(mobileNumber)) {
       //update data to register_view object with mobileNumber
       registerViewObject =
@@ -141,6 +151,8 @@ class RegisterViewModel extends BaseViewModel
 
   @override
   setProfilePicture(File profilePicture) {
+    inputProfilePicture.add(profilePicture);
+
     if (profilePicture.path.isNotEmpty) {
       //update data to register_view object with profilePicture
       registerViewObject =
@@ -202,12 +214,12 @@ class RegisterViewModel extends BaseViewModel
           .map((mobileNumber) => _isMobileNumberValid(mobileNumber));
 
   @override
-  Stream<String?> get outputErrorMobileNumberV =>
+  Stream<String?> get outputErrorMobileNumber =>
       outputIsMobileNumberValid.map((isMobileNumberValid) =>
           isMobileNumberValid ? null : "Invalid Mobile Number");
 
   @override
-  Stream<File> get outputIsProfilePictureValid =>
+  Stream<File?> get outputIsProfilePictureValid =>
       _profilePictureStreamController.stream.map((file) => file);
 
   @override
@@ -217,7 +229,7 @@ class RegisterViewModel extends BaseViewModel
 
   //private function
   bool _isUserNameValid(String userName) {
-    return userName.length >= 8;
+    return userName.length >= 3;
   }
 
   bool _isPasswordValid(String password) {
@@ -287,9 +299,9 @@ abstract class RegisterViewModelOutputs {
 
   Stream<bool> get outputIsMobileNumberValid;
 
-  Stream<String?> get outputErrorMobileNumberV;
+  Stream<String?> get outputErrorMobileNumber;
 
-  Stream<File> get outputIsProfilePictureValid;
+  Stream<File?> get outputIsProfilePictureValid;
 
   Stream<bool> get outputIsAllInputValid;
 }

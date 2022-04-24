@@ -13,6 +13,7 @@ import 'package:flut_all_content/presentation/forgot_password/forgot_password_vi
 import 'package:flut_all_content/presentation/login/login_viewmodel.dart';
 import 'package:flut_all_content/presentation/register/register_viewmodel.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final instance = GetIt.instance;
@@ -72,5 +73,7 @@ initRegisterModuleModule() {
 
     instance.registerFactory<RegisterViewModel>(
         () => RegisterViewModel(instance()));
+
+    instance.registerFactory<ImagePicker>(() => ImagePicker());
   }
 }
