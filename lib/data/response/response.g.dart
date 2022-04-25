@@ -81,3 +81,79 @@ Map<String, dynamic> _$ForgotPasswordResponseToJson(
       'message': instance.message,
       'support': instance.support,
     };
+
+ServicesDetailsResponse _$ServicesDetailsResponseFromJson(
+        Map<String, dynamic> json) =>
+    ServicesDetailsResponse(
+      json['id'] as String?,
+      json['title'] as String?,
+      json['image'] as String?,
+    );
+
+Map<String, dynamic> _$ServicesDetailsResponseToJson(
+        ServicesDetailsResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.serviceTitle,
+      'image': instance.serviceImage,
+    };
+
+BannerDetailsResponse _$BannerDetailsResponseFromJson(
+        Map<String, dynamic> json) =>
+    BannerDetailsResponse(
+      json['id'] as String?,
+      json['title'] as String?,
+      json['link'] as String?,
+    );
+
+Map<String, dynamic> _$BannerDetailsResponseToJson(
+        BannerDetailsResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.bannerTitle,
+      'link': instance.bannerImageLink,
+    };
+
+StoresDetailsResponse _$StoresDetailsResponseFromJson(
+        Map<String, dynamic> json) =>
+    StoresDetailsResponse(
+      json['id'] as String?,
+      json['title'] as String?,
+      json['image'] as String?,
+    );
+
+Map<String, dynamic> _$StoresDetailsResponseToJson(
+        StoresDetailsResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.storeTitle,
+      'image': instance.storeImage,
+    };
+
+HomeDetailsResponse _$HomeDetailsResponseFromJson(Map<String, dynamic> json) =>
+    HomeDetailsResponse(
+      json['services'] == null
+          ? null
+          : ServicesDetailsResponse.fromJson(
+              json['services'] as Map<String, dynamic>),
+      json['banners'] == null
+          ? null
+          : BannerDetailsResponse.fromJson(
+              json['banners'] as Map<String, dynamic>),
+      json['stores'] == null
+          ? null
+          : StoresDetailsResponse.fromJson(
+              json['stores'] as Map<String, dynamic>),
+    )
+      ..status = json['status'] as int?
+      ..message = json['message'] as String?;
+
+Map<String, dynamic> _$HomeDetailsResponseToJson(
+        HomeDetailsResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'services': instance.servicesDetailsResponse,
+      'banners': instance.bannerDetailsResponse,
+      'stores': instance.storesDetailsResponse,
+    };

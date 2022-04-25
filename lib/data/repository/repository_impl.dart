@@ -4,6 +4,7 @@ import 'package:flut_all_content/data/mapper/mapper.dart';
 import 'package:flut_all_content/data/network/failure.dart';
 import 'package:flut_all_content/data/network/network_info.dart';
 import 'package:flut_all_content/data/request/request.dart';
+import 'package:flut_all_content/data/response/response.dart';
 import 'package:flut_all_content/domain/model/model.dart';
 import 'package:flut_all_content/domain/repository/repository.dart';
 
@@ -69,6 +70,30 @@ class RepositoryImpl implements Repository {
     if (await _networkInfo.isConnected) {
       try {
         final response = await _remoteDataSource.register(registerRequest);
+        if (response.status == ApiInternalStatus.SUCCESS) {
+          return Right(response.toDomain());
+        } else {
+          //return biz logic error
+          //return left
+          return Left(Failure(response.status ?? ApiInternalStatus.FAILURE,
+              response.message ?? ResponseMessage.DEFAULT));
+        }
+      } catch (error) {
+        //return Dio and other customization error
+        //return left
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      //return connection error
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, HomeDetailsResponse>> fetchHomeDetails() async{
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _remoteDataSource.fetchHomeDetails();
         if (response.status == ApiInternalStatus.SUCCESS) {
           return Right(response.toDomain());
         } else {
