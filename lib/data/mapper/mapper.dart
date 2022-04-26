@@ -57,21 +57,27 @@ extension StoreResponseMapper on StoresDetailsResponse {
 
 extension HomeDetailsResponseMapper on HomeDetailsResponse {
   HomeObject toDomain() {
-    List<HomeServices> _listHomeService = (servicesDetailsResponse
+    List<HomeServices> _listHomeService = (this
+                .data
+                ?.servicesDetailsResponse
                 ?.map((homeService) => homeService.toDomain()) ??
             const Iterable.empty())
         .cast<HomeServices>()
         .toList();
-    List<HomeBannerAd> _listHomeBannerAd =
-        (bannerDetailsResponse?.map((bannerAd) => bannerAd.toDomain()) ??
-                const Iterable.empty())
-            .cast<HomeBannerAd>()
-            .toList();
-    List<HomeStore> _listHomeStore =
-        (storesDetailsResponse?.map((homeStore) => homeStore.toDomain()) ??
-                const Iterable.empty())
-            .cast<HomeStore>()
-            .toList();
+    List<HomeBannerAd> _listHomeBannerAd = (this
+                .data
+                ?.bannerDetailsResponse
+                ?.map((bannerAd) => bannerAd.toDomain()) ??
+            const Iterable.empty())
+        .cast<HomeBannerAd>()
+        .toList();
+    List<HomeStore> _listHomeStore = (this
+                .data
+                ?.storesDetailsResponse
+                ?.map((homeStore) => homeStore.toDomain()) ??
+            const Iterable.empty())
+        .cast<HomeStore>()
+        .toList();
     var data = HomeData(_listHomeService, _listHomeBannerAd, _listHomeStore);
     return HomeObject(data);
   }

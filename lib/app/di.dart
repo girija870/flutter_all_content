@@ -1,5 +1,6 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flut_all_content/app/app_prefs.dart';
+import 'package:flut_all_content/data/data_source/local_data_source.dart';
 import 'package:flut_all_content/data/data_source/remote_data_source.dart';
 import 'package:flut_all_content/data/network/app_api.dart';
 import 'package:flut_all_content/data/network/dio_factory.dart';
@@ -7,10 +8,12 @@ import 'package:flut_all_content/data/network/network_info.dart';
 import 'package:flut_all_content/data/repository/repository_impl.dart';
 import 'package:flut_all_content/domain/repository/repository.dart';
 import 'package:flut_all_content/domain/usecase/forgot_password_usecase.dart';
+import 'package:flut_all_content/domain/usecase/home_usecase.dart';
 import 'package:flut_all_content/domain/usecase/login_usecase.dart';
 import 'package:flut_all_content/domain/usecase/register_usecase.dart';
 import 'package:flut_all_content/presentation/forgot_password/forgot_password_viewmodel.dart';
 import 'package:flut_all_content/presentation/login/login_viewmodel.dart';
+import 'package:flut_all_content/presentation/main/home/home_viewmodel.dart';
 import 'package:flut_all_content/presentation/register/register_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
@@ -44,8 +47,14 @@ Future<void> initAppModule() async {
   instance.registerLazySingleton<RemoteDataSource>(
       () => RemoteDataSourceImplementer(instance()));
 
+  //local data source
+  instance.registerLazySingleton<LocalDataSource>(
+      () => LocalDataSourceImplementer());
+
   //repository
-  instance.registerLazySingleton<Repository>(() => RepositoryImpl(instance(),
+  instance.registerLazySingleton<Repository>(() => RepositoryImpl(
+      instance(),
+      instance(),
       instance())); //(instance(),instance()) -> instance of remoteDataSource & NetworkInfo
 }
 
@@ -66,7 +75,7 @@ initForgotPasswordModule() {
   }
 }
 
-initRegisterModuleModule() {
+initRegisterModule() {
   if (!GetIt.I.isRegistered<RegisterUseCase>()) {
     instance
         .registerFactory<RegisterUseCase>(() => RegisterUseCase(instance()));
@@ -75,5 +84,13 @@ initRegisterModuleModule() {
         () => RegisterViewModel(instance()));
 
     instance.registerFactory<ImagePicker>(() => ImagePicker());
+  }
+}
+
+initHomeModule() {
+  if (!GetIt.I.isRegistered<HomeUseCase>()) {
+    instance.registerFactory<HomeUseCase>(() => HomeUseCase(instance()));
+
+    instance.registerFactory<HomeViewModel>(() => HomeViewModel(instance()));
   }
 }

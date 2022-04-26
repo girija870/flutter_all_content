@@ -7,13 +7,16 @@ import 'package:flut_all_content/data/request/request.dart';
 import 'package:flut_all_content/domain/model/model.dart';
 import 'package:flut_all_content/domain/repository/repository.dart';
 
+import '../data_source/local_data_source.dart';
 import '../network/error_handler.dart';
 
 class RepositoryImpl implements Repository {
   final RemoteDataSource _remoteDataSource;
+  final LocalDataSource _localDataSource;
   final NetworkInfo _networkInfo;
 
-  RepositoryImpl(this._remoteDataSource, this._networkInfo);
+  RepositoryImpl(
+      this._remoteDataSource, this._localDataSource, this._networkInfo);
 
   @override
   Future<Either<Failure, Authentication>> login(
@@ -90,25 +93,35 @@ class RepositoryImpl implements Repository {
 
   @override
   Future<Either<Failure, HomeObject>> fetchHomeDetails() async {
-    if (await _networkInfo.isConnected) {
-      try {
-        final response = await _remoteDataSource.fetchHomeDetails();
-        if (response.status == ApiInternalStatus.SUCCESS) {
-          return Right(response.toDomain());
-        } else {
-          //return biz logic error
+    try {
+      //get from cache
+      final response = await _localDataSource.fetchHomeDetails();
+      return Right(response.toDomain());
+    } catch (cacheError) {
+      //we have cache error so we should call api
+      if (await _networkInfo.isConnected) {
+        try {
+          final response = await _remoteDataSource.fetchHomeDetails();
+          if (response.status == ApiInternalStatus.SUCCESS) {
+            //right-> success
+            //save response to local data source
+            _localDataSource.saveHomeToCache(response);
+            return Right(response.toDomain());
+          } else {
+            //return biz logic error
+            //return left
+            return Left(Failure(response.status ?? ApiInternalStatus.FAILURE,
+                response.message ?? ResponseMessage.DEFAULT));
+          }
+        } catch (error) {
+          //return Dio and other customization error
           //return left
-          return Left(Failure(response.status ?? ApiInternalStatus.FAILURE,
-              response.message ?? ResponseMessage.DEFAULT));
+          return Left(ErrorHandler.handle(error).failure);
         }
-      } catch (error) {
-        //return Dio and other customization error
-        //return left
-        return Left(ErrorHandler.handle(error).failure);
+      } else {
+        //return connection error
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
       }
-    } else {
-      //return connection error
-      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }
 }

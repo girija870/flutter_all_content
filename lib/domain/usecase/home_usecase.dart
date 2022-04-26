@@ -5,7 +5,7 @@ import 'package:flut_all_content/domain/repository/repository.dart';
 import 'package:flut_all_content/domain/usecase/base_usecase.dart';
 
  class HomeUseCase implements BaseUseCase<void,HomeObject>{
-   Repository _repository;
+   final Repository _repository;
 
    HomeUseCase(this._repository);
 
