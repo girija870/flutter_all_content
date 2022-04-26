@@ -36,33 +36,43 @@ extension ForgotPasswordMapper on ForgotPasswordResponse {
 
 extension ServicesResponseMapper on ServicesDetailsResponse {
   HomeServices toDomain() {
-    return HomeServices(id?.orEmpty() ?? EMPTY,
-        serviceTitle?.orEmpty() ?? EMPTY, serviceImage?.orEmpty() ?? EMPTY);
+    return HomeServices(id?.orZero() ?? ZERO, serviceTitle?.orEmpty() ?? EMPTY,
+        serviceImage?.orEmpty() ?? EMPTY);
   }
 }
 
 extension BannerResponseMapper on BannerDetailsResponse {
   HomeBannerAd toDomain() {
-    return HomeBannerAd(id?.orEmpty() ?? EMPTY, bannerTitle?.orEmpty() ?? EMPTY,
+    return HomeBannerAd(id?.orZero() ?? ZERO, bannerTitle?.orEmpty() ?? EMPTY,
         bannerImageLink?.orEmpty() ?? EMPTY);
   }
 }
 
 extension StoreResponseMapper on StoresDetailsResponse {
   HomeStore toDomain() {
-    return HomeStore(id?.orEmpty() ?? EMPTY, storeTitle?.orEmpty() ?? EMPTY,
+    return HomeStore(id?.orZero() ?? ZERO, storeTitle?.orEmpty() ?? EMPTY,
         storeImage?.orEmpty() ?? EMPTY);
   }
 }
 
 extension HomeDetailsResponseMapper on HomeDetailsResponse {
   HomeObject toDomain() {
-    List<HomeServices> _homeServices = servicesDetailsResponse.map((service) =>
-        service.toDomain()) ?? Iterable.empty()
-    ).cast<HomeServices>().toList();
-    List<HomeServices> mappedServices =
-
-    return HomeObject(
-    );
+    List<HomeServices> _listHomeService = (servicesDetailsResponse
+                ?.map((homeService) => homeService.toDomain()) ??
+            const Iterable.empty())
+        .cast<HomeServices>()
+        .toList();
+    List<HomeBannerAd> _listHomeBannerAd =
+        (bannerDetailsResponse?.map((bannerAd) => bannerAd.toDomain()) ??
+                const Iterable.empty())
+            .cast<HomeBannerAd>()
+            .toList();
+    List<HomeStore> _listHomeStore =
+        (storesDetailsResponse?.map((homeStore) => homeStore.toDomain()) ??
+                const Iterable.empty())
+            .cast<HomeStore>()
+            .toList();
+    var data = HomeData(_listHomeService, _listHomeBannerAd, _listHomeStore);
+    return HomeObject(data);
   }
 }

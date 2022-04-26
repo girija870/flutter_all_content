@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:flut_all_content/data/response/response.dart';
 import 'package:flut_all_content/domain/model/model.dart';
 
 import '../../data/network/failure.dart';
@@ -13,5 +12,5 @@ abstract class Repository {
   Future<Either<Failure, Authentication>> register(
       RegisterRequest registerRequest);
 
-  Future<Either<Failure, HomeDetailsResponse>> fetchHomeDetails();
+  Future<Either<Failure, HomeObject>> fetchHomeDetails();
 }

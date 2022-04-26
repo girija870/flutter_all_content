@@ -4,7 +4,6 @@ import 'package:flut_all_content/data/mapper/mapper.dart';
 import 'package:flut_all_content/data/network/failure.dart';
 import 'package:flut_all_content/data/network/network_info.dart';
 import 'package:flut_all_content/data/request/request.dart';
-import 'package:flut_all_content/data/response/response.dart';
 import 'package:flut_all_content/domain/model/model.dart';
 import 'package:flut_all_content/domain/repository/repository.dart';
 
@@ -90,7 +89,7 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, HomeDetailsResponse>> fetchHomeDetails() async{
+  Future<Either<Failure, HomeObject>> fetchHomeDetails() async {
     if (await _networkInfo.isConnected) {
       try {
         final response = await _remoteDataSource.fetchHomeDetails();

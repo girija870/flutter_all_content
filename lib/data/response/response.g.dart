@@ -85,7 +85,7 @@ Map<String, dynamic> _$ForgotPasswordResponseToJson(
 ServicesDetailsResponse _$ServicesDetailsResponseFromJson(
         Map<String, dynamic> json) =>
     ServicesDetailsResponse(
-      json['id'] as String?,
+      json['id'] as int?,
       json['title'] as String?,
       json['image'] as String?,
     );
@@ -101,7 +101,7 @@ Map<String, dynamic> _$ServicesDetailsResponseToJson(
 BannerDetailsResponse _$BannerDetailsResponseFromJson(
         Map<String, dynamic> json) =>
     BannerDetailsResponse(
-      json['id'] as String?,
+      json['id'] as int?,
       json['title'] as String?,
       json['link'] as String?,
     );
@@ -117,7 +117,7 @@ Map<String, dynamic> _$BannerDetailsResponseToJson(
 StoresDetailsResponse _$StoresDetailsResponseFromJson(
         Map<String, dynamic> json) =>
     StoresDetailsResponse(
-      json['id'] as String?,
+      json['id'] as int?,
       json['title'] as String?,
       json['image'] as String?,
     );
@@ -132,18 +132,18 @@ Map<String, dynamic> _$StoresDetailsResponseToJson(
 
 HomeDetailsResponse _$HomeDetailsResponseFromJson(Map<String, dynamic> json) =>
     HomeDetailsResponse(
-      json['services'] == null
-          ? null
-          : ServicesDetailsResponse.fromJson(
-              json['services'] as Map<String, dynamic>),
-      json['banners'] == null
-          ? null
-          : BannerDetailsResponse.fromJson(
-              json['banners'] as Map<String, dynamic>),
-      json['stores'] == null
-          ? null
-          : StoresDetailsResponse.fromJson(
-              json['stores'] as Map<String, dynamic>),
+      (json['services'] as List<dynamic>?)
+          ?.map((e) =>
+              ServicesDetailsResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      (json['banners'] as List<dynamic>?)
+          ?.map(
+              (e) => BannerDetailsResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      (json['stores'] as List<dynamic>?)
+          ?.map(
+              (e) => StoresDetailsResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
     )
       ..status = json['status'] as int?
       ..message = json['message'] as String?;

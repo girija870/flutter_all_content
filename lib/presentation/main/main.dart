@@ -1,4 +1,4 @@
-import 'package:flut_all_content/presentation/main/home_page.dart';
+import 'package:flut_all_content/presentation/main/home/home_page.dart';
 import 'package:flut_all_content/presentation/main/search_page.dart';
 import 'package:flut_all_content/presentation/main/settings_page.dart';
 import 'package:flut_all_content/presentation/resources/color_manager.dart';
