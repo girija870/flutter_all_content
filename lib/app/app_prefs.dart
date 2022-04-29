@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flut_all_content/presentation/resources/language_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,6 +21,30 @@ class AppPreferences {
     }
   }
 
+  Future<void> setLanguageChanged() async {
+    String currentLanguage = await getAppLanguage();
+    if (currentLanguage == LanguageType.NEPALI.getValue()) {
+      //save pref with english language
+      _sharedPreferences.setString(
+          PRESS_KEY_LANG, LanguageType.ENGLISH.getValue());
+    } else {
+      //save pref with nepali language
+      _sharedPreferences.setString(
+          PRESS_KEY_LANG, LanguageType.NEPALI.getValue());
+    }
+  }
+
+  Future<Locale> getLocal() async {
+    String currentLanguage = await getAppLanguage();
+    if (currentLanguage == LanguageType.NEPALI.getValue()) {
+      //return nepali local
+      return NEPALI_LOCAL;
+    } else {
+      //return english local
+      return ENGLISH_LOCAL;
+    }
+  }
+
   Future<void> setOnBoardingScreenViewed() async {
     _sharedPreferences.setBool(PRESS_KEY_ONBOARDING_SCREEN, true);
   }
@@ -33,5 +59,9 @@ class AppPreferences {
 
   Future<bool> isIsUserLoggedIn() async {
     return _sharedPreferences.getBool(PRESS_KEY_IS_USER_LOGGED_IN) ?? false;
+  }
+
+  Future<bool> logout() async {
+    return _sharedPreferences.remove(PRESS_KEY_IS_USER_LOGGED_IN);
   }
 }

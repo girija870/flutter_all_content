@@ -15,7 +15,6 @@ class HomeViewModel extends BaseViewModel
 
   final StreamController _homeDataStreamController =
       BehaviorSubject<HomeData>();
-
   //inputs
   @override
   void start() {

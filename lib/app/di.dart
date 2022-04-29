@@ -1,4 +1,3 @@
-import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flut_all_content/app/app_prefs.dart';
 import 'package:flut_all_content/data/data_source/local_data_source.dart';
 import 'package:flut_all_content/data/data_source/remote_data_source.dart';
@@ -11,10 +10,12 @@ import 'package:flut_all_content/domain/usecase/forgot_password_usecase.dart';
 import 'package:flut_all_content/domain/usecase/home_usecase.dart';
 import 'package:flut_all_content/domain/usecase/login_usecase.dart';
 import 'package:flut_all_content/domain/usecase/register_usecase.dart';
+import 'package:flut_all_content/domain/usecase/store_details_usecase.dart';
 import 'package:flut_all_content/presentation/forgot_password/forgot_password_viewmodel.dart';
 import 'package:flut_all_content/presentation/login/login_viewmodel.dart';
 import 'package:flut_all_content/presentation/main/home/home_viewmodel.dart';
 import 'package:flut_all_content/presentation/register/register_viewmodel.dart';
+import 'package:flut_all_content/presentation/store_details/store_details_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,8 +33,7 @@ Future<void> initAppModule() async {
       instance())); // instance<SharedPreferences>() = <SharedPreferences> doest not require because get recognize automatically
 
 //network info
-  instance.registerLazySingleton<NetworkInfo>(
-      () => NetworkInfoImpl(DataConnectionChecker()));
+  instance.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl());
 
   //dio factory
   instance.registerLazySingleton<DioFactory>(() =>
@@ -92,5 +92,15 @@ initHomeModule() {
     instance.registerFactory<HomeUseCase>(() => HomeUseCase(instance()));
 
     instance.registerFactory<HomeViewModel>(() => HomeViewModel(instance()));
+  }
+}
+
+initStoreDetailsModule() {
+  if (!GetIt.I.isRegistered<StoreDetailsUseCase>()) {
+    instance.registerFactory<StoreDetailsUseCase>(
+        () => StoreDetailsUseCase(instance()));
+
+    instance.registerFactory<StoreDetailsViewModel>(
+        () => StoreDetailsViewModel(instance()));
   }
 }

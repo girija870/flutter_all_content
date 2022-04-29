@@ -28,51 +28,57 @@ extension AuthenticationResponseMapper on AuthenticationResponse? {
   }
 }
 
-extension ForgotPasswordMapper on ForgotPasswordResponse {
+extension ForgotPasswordMapper on ForgotPasswordResponse? {
   String toDomain() {
-    return support?.orEmpty() ?? EMPTY;
+    return this?.support?.orEmpty() ?? EMPTY;
   }
 }
 
-extension ServicesResponseMapper on ServicesDetailsResponse {
+extension ServicesResponseMapper on ServicesDetailsResponse? {
   HomeServices toDomain() {
-    return HomeServices(id?.orZero() ?? ZERO, serviceTitle?.orEmpty() ?? EMPTY,
-        serviceImage?.orEmpty() ?? EMPTY);
+    return HomeServices(
+        this?.id?.orZero() ?? ZERO,
+        this?.serviceTitle?.orEmpty() ?? EMPTY,
+        this?.serviceImage?.orEmpty() ?? EMPTY);
   }
 }
 
-extension BannerResponseMapper on BannerDetailsResponse {
+extension BannerResponseMapper on BannerDetailsResponse? {
   HomeBannerAd toDomain() {
-    return HomeBannerAd(id?.orZero() ?? ZERO, bannerTitle?.orEmpty() ?? EMPTY,
-        bannerImageLink?.orEmpty() ?? EMPTY);
+    return HomeBannerAd(
+        this?.id?.orZero() ?? ZERO,
+        this?.bannerTitle?.orEmpty() ?? EMPTY,
+        this?.bannerImageLink?.orEmpty() ?? EMPTY);
   }
 }
 
-extension StoreResponseMapper on StoresDetailsResponse {
+extension StoreResponseMapper on StoresDetailsResponse? {
   HomeStore toDomain() {
-    return HomeStore(id?.orZero() ?? ZERO, storeTitle?.orEmpty() ?? EMPTY,
-        storeImage?.orEmpty() ?? EMPTY);
+    return HomeStore(
+        this?.id?.orZero() ?? ZERO,
+        this?.storeTitle?.orEmpty() ?? EMPTY,
+        this?.storeImage?.orEmpty() ?? EMPTY);
   }
 }
 
-extension HomeDetailsResponseMapper on HomeDetailsResponse {
+extension HomeDetailsResponseMapper on HomeDetailsResponse? {
   HomeObject toDomain() {
     List<HomeServices> _listHomeService = (this
-                .data
+                ?.data
                 ?.servicesDetailsResponse
                 ?.map((homeService) => homeService.toDomain()) ??
             const Iterable.empty())
         .cast<HomeServices>()
         .toList();
     List<HomeBannerAd> _listHomeBannerAd = (this
-                .data
+                ?.data
                 ?.bannerDetailsResponse
                 ?.map((bannerAd) => bannerAd.toDomain()) ??
             const Iterable.empty())
         .cast<HomeBannerAd>()
         .toList();
     List<HomeStore> _listHomeStore = (this
-                .data
+                ?.data
                 ?.storesDetailsResponse
                 ?.map((homeStore) => homeStore.toDomain()) ??
             const Iterable.empty())
@@ -80,5 +86,17 @@ extension HomeDetailsResponseMapper on HomeDetailsResponse {
         .toList();
     var data = HomeData(_listHomeService, _listHomeBannerAd, _listHomeStore);
     return HomeObject(data);
+  }
+}
+
+extension SingleStoreDetailMapper on SingleStoreDetailsResponse? {
+  SingleStoreDetail toDomain() {
+    return SingleStoreDetail(
+        this?.id?.orZero() ?? ZERO,
+        this?.storeTitle?.orEmpty() ?? EMPTY,
+        this?.storeImage?.orEmpty() ?? EMPTY,
+        this?.services?.orEmpty() ?? EMPTY,
+        this?.details?.orEmpty() ?? EMPTY,
+        this?.about?.orEmpty() ?? EMPTY);
   }
 }

@@ -3,12 +3,21 @@ import 'package:flut_all_content/data/network/error_handler.dart';
 import '../response/response.dart';
 
 const CACHE_HOME_KEY = "CACHE_HOME_KEY";
-const CACHE_HOME_INTERVAL = 60 * 1000; // 1 minnute in milliseconds
+const CACHE_HOME_INTERVAL = 60 * 1000; // 1 minute in milliseconds
+
+const CACHE_STORE_DETAILS_KEY = "CACHE_STORE_DETAILS_KEY";
+const CACHE_STORE_DETAILS_INTERVAL = 60 * 1000; // 1 minute in milliseconds
+
 
 abstract class LocalDataSource {
   Future<HomeDetailsResponse> fetchHomeDetails();
 
   Future<void> saveHomeToCache(HomeDetailsResponse homeDetailsResponse);
+
+  Future<SingleStoreDetailsResponse> fetchSingleStoreDetails();
+
+  Future<void> saveStoreDetailsToCache(
+      SingleStoreDetailsResponse singleStoreDetailsResponse);
 
   void clearCache();
 
@@ -45,6 +54,24 @@ class LocalDataSourceImplementer implements LocalDataSource {
   @override
   void removeFromCache(String key) {
     cacheMap.remove(key);
+  }
+
+  @override
+  Future<SingleStoreDetailsResponse> fetchSingleStoreDetails() {
+    CachedItem? cachedItem = cacheMap[CACHE_STORE_DETAILS_KEY];
+    if (cachedItem != null && cachedItem.isValid(CACHE_STORE_DETAILS_INTERVAL)) {
+      //return the response from the cache
+      return cachedItem.data;
+    } else {
+      //return error that cache is not valid
+      throw ErrorHandler.handle(DataSource.CACHE_ERROR);
+    }
+  }
+
+  @override
+  Future<void> saveStoreDetailsToCache(
+      SingleStoreDetailsResponse singleStoreDetailsResponse) async {
+    cacheMap[CACHE_STORE_DETAILS_KEY] = CachedItem(singleStoreDetailsResponse);
   }
 }
 

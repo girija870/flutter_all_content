@@ -7,7 +7,7 @@ import 'package:flut_all_content/presentation/resources/strings_manager.dart';
 import 'package:flut_all_content/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../app/di.dart';
 import 'login_viewmodel.dart';
@@ -97,11 +97,11 @@ class _LoginViewState extends State<LoginView> {
                         textInputAction: TextInputAction.next,
                         controller: _userNameController,
                         decoration: InputDecoration(
-                            hintText: AppStrings.userName,
-                            labelText: AppStrings.userName,
+                            hintText: AppStrings.username.tr(),
+                            labelText: AppStrings.username.tr(),
                             errorText: (snapshot.data ?? true)
                                 ? null
-                                : AppStrings.userNameError),
+                                : AppStrings.usernameError.tr()),
                       );
                     }),
               ),
@@ -116,11 +116,11 @@ class _LoginViewState extends State<LoginView> {
                         keyboardType: TextInputType.visiblePassword,
                         controller: _passwordController,
                         decoration: InputDecoration(
-                            hintText: AppStrings.password,
-                            labelText: AppStrings.password,
+                            hintText: AppStrings.password.tr(),
+                            labelText: AppStrings.password.tr(),
                             errorText: (snapshot.data ?? true)
                                 ? null
-                                : AppStrings.userNameError),
+                                : AppStrings.usernameError.tr()),
                       );
                     }),
               ),
@@ -140,7 +140,7 @@ class _LoginViewState extends State<LoginView> {
                                   _loginViewModel.login();
                                 }
                               : null,
-                          child: const Text(AppStrings.login)),
+                          child:  Text(AppStrings.login.tr())),
                     );
                   },
                 ),
@@ -159,7 +159,7 @@ class _LoginViewState extends State<LoginView> {
                         Navigator.pushReplacementNamed(
                             context, Routes.forgotPasswordRoute);
                       },
-                      child: Text(AppStrings.forgotPassword,
+                      child: Text(AppStrings.forgetPassword.tr(),
                           style: Theme.of(context).textTheme.subtitle2),
                     ),
                     TextButton(
@@ -169,7 +169,7 @@ class _LoginViewState extends State<LoginView> {
                         },
                         child: FittedBox(
                           fit: BoxFit.cover,
-                          child: Text(AppStrings.registerText,
+                          child: Text(AppStrings.registerText.tr(),
                               style: Theme.of(context).textTheme.subtitle2),
                         ))
                   ],

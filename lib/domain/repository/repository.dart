@@ -13,4 +13,6 @@ abstract class Repository {
       RegisterRequest registerRequest);
 
   Future<Either<Failure, HomeObject>> fetchHomeDetails();
+
+  Future<Either<Failure, SingleStoreDetail>> fetchSingleStoreDetails();
 }

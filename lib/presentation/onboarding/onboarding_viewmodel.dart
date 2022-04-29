@@ -5,7 +5,7 @@ import 'package:flut_all_content/presentation/base/base_view_model.dart';
 
 import '../resources/assets_manager.dart';
 import '../resources/strings_manager.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 class OnBoardingViewModel extends BaseViewModel
     with OnBoardingViewModelInputs, OnBoardingViewModelOutputs {
   late final List<SliderObject> _list;
@@ -65,13 +65,13 @@ class OnBoardingViewModel extends BaseViewModel
   //private function
   List<SliderObject> _getSliderData() => [
         SliderObject(AppStrings.onBoardingTitle1,
-            AppStrings.onBoardingSubTitle1, ImagesAssets.onBoardingLogo1),
-        SliderObject(AppStrings.onBoardingTitle2,
-            AppStrings.onBoardingSubTitle2, ImagesAssets.onBoardingLogo2),
-        SliderObject(AppStrings.onBoardingTitle3,
-            AppStrings.onBoardingSubTitle3, ImagesAssets.onBoardingLogo3),
-        SliderObject(AppStrings.onBoardingTitle4,
-            AppStrings.onBoardingSubTitle4, ImagesAssets.onBoardingLogo4),
+            AppStrings.onBoardingSubTitle1.tr(), ImagesAssets.onBoardingLogo1),
+        SliderObject(AppStrings.onBoardingTitle2.tr(),
+            AppStrings.onBoardingSubTitle2.tr(), ImagesAssets.onBoardingLogo2),
+        SliderObject(AppStrings.onBoardingTitle3.tr(),
+            AppStrings.onBoardingSubTitle3.tr(), ImagesAssets.onBoardingLogo3),
+        SliderObject(AppStrings.onBoardingTitle4.tr(),
+            AppStrings.onBoardingSubTitle4.tr(), ImagesAssets.onBoardingLogo4),
       ];
 
   _postDataToView() {

@@ -74,3 +74,20 @@ class HomeObject {
 
   HomeObject(this.data);
 }
+
+class SingleStoreDetail {
+  int id;
+
+  String storeTitle;
+
+  String storeImage;
+
+  String services;
+
+  String details;
+
+  String about;
+
+  SingleStoreDetail(this.id, this.storeTitle, this.storeImage, this.services,
+      this.details, this.about);
+}

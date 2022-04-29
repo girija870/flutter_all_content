@@ -16,6 +16,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../app/di.dart';
 import '../common/widget.dart';
 import '../resources/values_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 const String INITIAL_SELECTED = '+977';
 
@@ -116,10 +117,10 @@ class _RegisterViewState extends State<RegisterView> {
                     stream: _registerViewModel.outputErrorUserName,
                     builder: (context, snapshot) {
                       return CustomTextFormField(
-                        labelText: AppStrings.userName,
+                        labelText: AppStrings.username.tr(),
                         snapshot: snapshot,
                         keyboardType: TextInputType.text,
-                        hintText: AppStrings.userName,
+                        hintText: AppStrings.username.tr(),
                         errorText: snapshot.data,
                         controller: _userNameController,
                       );
@@ -156,10 +157,10 @@ class _RegisterViewState extends State<RegisterView> {
                           stream: _registerViewModel.outputErrorMobileNumber,
                           builder: (context, snapshot) {
                             return CustomTextFormField(
-                              labelText: AppStrings.mobileNumber,
+                              labelText: AppStrings.mobileNumber.tr(),
                               snapshot: snapshot,
                               keyboardType: TextInputType.text,
-                              hintText: AppStrings.mobileNumber,
+                              hintText: AppStrings.mobileNumber.tr(),
                               errorText: snapshot.data,
                               controller: _mobileNumberController,
                             );
@@ -178,10 +179,10 @@ class _RegisterViewState extends State<RegisterView> {
                     stream: _registerViewModel.outputErrorEmail,
                     builder: (context, snapshot) {
                       return CustomTextFormField(
-                        labelText: AppStrings.email,
+                        labelText: AppStrings.emailHint.tr(),
                         snapshot: snapshot,
                         keyboardType: TextInputType.emailAddress,
-                        hintText: AppStrings.email,
+                        hintText: AppStrings.emailHint.tr(),
                         errorText: snapshot.data,
                         controller: _emailController,
                       );
@@ -195,10 +196,10 @@ class _RegisterViewState extends State<RegisterView> {
                     stream: _registerViewModel.outputErrorPassword,
                     builder: (context, snapshot) {
                       return CustomTextFormField(
-                        labelText: AppStrings.password,
+                        labelText: AppStrings.password.tr(),
                         snapshot: snapshot,
                         keyboardType: TextInputType.visiblePassword,
-                        hintText: AppStrings.password,
+                        hintText: AppStrings.password.tr(),
                         errorText: snapshot.data,
                         controller: _passwordController,
                       );
@@ -237,7 +238,7 @@ class _RegisterViewState extends State<RegisterView> {
                                   _registerViewModel.register();
                                 }
                               : null,
-                          child: const Text(AppStrings.registerText)),
+                          child:  Text(AppStrings.registerText.tr())),
                     );
                   },
                 ),
@@ -252,7 +253,7 @@ class _RegisterViewState extends State<RegisterView> {
                   onPressed: () {
                     Navigator.pushReplacementNamed(context, Routes.loginRoute);
                   },
-                  child: Text(AppStrings.alreadyHaveAnAccount,
+                  child: Text(AppStrings.haveAccount.tr(),
                       style: Theme.of(context).textTheme.subtitle2),
                 ),
               ),
@@ -269,7 +270,7 @@ class _RegisterViewState extends State<RegisterView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Flexible(child: Text(AppStrings.profilePicture)),
+           Flexible(child: Text(AppStrings.profilePicture.tr())),
           Flexible(
             child: StreamBuilder<File?>(
               stream: _registerViewModel.outputIsProfilePictureValid,
@@ -302,7 +303,7 @@ class _RegisterViewState extends State<RegisterView> {
               ListTile(
                 trailing: const Icon(Icons.arrow_forward),
                 leading: const Icon(Icons.camera),
-                title: const Text(AppStrings.photoGalley),
+                title:  Text(AppStrings.photoGalley.tr()),
                 onTap: () {
                   _imageFormGallery();
                   Navigator.of(context).pop();
@@ -311,7 +312,7 @@ class _RegisterViewState extends State<RegisterView> {
               ListTile(
                 trailing: const Icon(Icons.arrow_forward),
                 leading: const Icon(Icons.camera_alt_rounded),
-                title: const Text(AppStrings.photoCamera),
+                title:  Text(AppStrings.photoCamera.tr()),
                 onTap: () {
                   _imageFormCamera();
                   Navigator.of(context).pop();

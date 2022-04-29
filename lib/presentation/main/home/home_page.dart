@@ -6,6 +6,7 @@ import 'package:flut_all_content/presentation/resources/routes_manager.dart';
 import 'package:flut_all_content/presentation/resources/strings_manager.dart';
 import 'package:flut_all_content/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../../app/di.dart';
 import '../../../domain/model/model.dart';
@@ -62,9 +63,9 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _getBannersCarousel(snapshot.data?.bannerAd),
-              _getSection(AppStrings.services),
+              _getSection(AppStrings.services.tr()),
               _getServices(snapshot.data?.services),
-              _getSection(AppStrings.stores),
+              _getSection(AppStrings.stores.tr()),
               _getStores(snapshot.data?.store),
             ],
           );
