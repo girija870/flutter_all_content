@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flut_all_content/app/app_prefs.dart';
 import 'package:flut_all_content/presentation/common/state_renderer_impl.dart';
 import 'package:flut_all_content/presentation/resources/assets_manager.dart';
@@ -7,7 +8,6 @@ import 'package:flut_all_content/presentation/resources/strings_manager.dart';
 import 'package:flut_all_content/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 import '../../app/di.dart';
 import 'login_viewmodel.dart';
@@ -36,9 +36,11 @@ class _LoginViewState extends State<LoginView> {
 
     //navigate to main screen
     _loginViewModel.isUserLoggedInSuccessfullyStreamController.stream
-        .listen((isLoggedInSuccess) {
+        .listen((token) {
       SchedulerBinding.instance?.addPostFrameCallback((_) {
         _appPreferences.setUserLoggedIn();
+        _appPreferences.setUserToken(token);
+        resetModules();
         Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
       });
     });
@@ -140,7 +142,7 @@ class _LoginViewState extends State<LoginView> {
                                   _loginViewModel.login();
                                 }
                               : null,
-                          child:  Text(AppStrings.login.tr())),
+                          child: Text(AppStrings.login.tr())),
                     );
                   },
                 ),

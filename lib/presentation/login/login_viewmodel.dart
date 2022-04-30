@@ -16,7 +16,7 @@ class LoginViewModel extends BaseViewModel
       StreamController<void>.broadcast();
 
   final StreamController isUserLoggedInSuccessfullyStreamController =
-      StreamController<bool>();
+      StreamController<String>();
 
   var loginObject = LoginObject("", "");
   final LoginUseCase? _loginUseCase; //todo remove?
@@ -63,7 +63,7 @@ class LoginViewModel extends BaseViewModel
       inputState.add(ContentState());
       //navigate to main screen after login
 
-      isUserLoggedInSuccessfullyStreamController.add(true);
+      isUserLoggedInSuccessfullyStreamController.add("wafeeawef4waf5waf455fW");
     });
   }
 

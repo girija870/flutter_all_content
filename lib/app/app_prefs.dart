@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 const String PRESS_KEY_LANG = "PRESS_KEY_LANG";
 const String PRESS_KEY_ONBOARDING_SCREEN = "PRESS_KEY_ONBOARDING_SCREEN";
 const String PRESS_KEY_IS_USER_LOGGED_IN = "PRESS_KEY_IS_USER_LOGGED_IN";
+const String PRESS_KEY_IS_USER_TOKEN = "PRESS_KEY_IS_USER_TOKEN";
 
 class AppPreferences {
   final SharedPreferences _sharedPreferences;
@@ -51,6 +52,15 @@ class AppPreferences {
 
   Future<bool> isOnBoardingScreenViewed() async {
     return _sharedPreferences.getBool(PRESS_KEY_ONBOARDING_SCREEN) ?? false;
+  }
+
+  Future<void> setUserToken(String token) async {
+    _sharedPreferences.setString(PRESS_KEY_IS_USER_TOKEN, token);
+  }
+
+  Future<String> getUserToken() async {
+    return _sharedPreferences.getString(PRESS_KEY_IS_USER_TOKEN) ??
+        "Token Not Saved";
   }
 
   Future<void> setUserLoggedIn() async {
