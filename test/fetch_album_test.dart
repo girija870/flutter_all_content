@@ -21,7 +21,7 @@ main() {
           .thenAnswer((_) async =>
               http.Response('{"userId": 1, "id": 2, "title": "mock"}', 200));
 
-      expect(await fetchAlbum(client), isA<Album>);
+      expect(await fetchAlbum(client), isA<Album>());
     });
 
     test('throws an exception if the http call completes with an error', () {

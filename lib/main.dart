@@ -46,37 +46,57 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _decrementedCounter() {
+    setState(() {
+      _counter.decrement();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            TextButton(
-                onPressed: () {
-                  //navigate to album page
-                  MaterialPageRoute(builder: (context) => const AlbumView());
-                },
-                child: const Text("GoToAlbumPage"))
-          ],
+        appBar: AppBar(
+          title: Text(widget.title),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Text(
+                'You have pushed the button this many times:',
+              ),
+              Text(
+                '${_counter.value}',
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              TextButton(
+                  onPressed: () {
+                    //navigate to album page
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AlbumView()));
+                  },
+                  child: const Text("GoToAlbumPage"))
+            ],
+          ),
+        ),
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              onPressed: _decrementedCounter,
+              tooltip: 'decrement',
+              child: const Icon(Icons.remove),
+            ),
+            FloatingActionButton(
+              onPressed: _incrementCounter,
+              tooltip: 'Increment',
+              child: const Icon(Icons.add),
+            ),
+          ],
+        ) // This trailing comma makes auto-formatting nicer for build methods.
+        );
   }
 }
