@@ -1,4 +1,5 @@
 import 'package:flut_all_content/album/album_view.dart';
+import 'package:flut_all_content/counter.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -31,11 +32,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  late final Counter _counter;
+
+  @override
+  void initState() {
+    _counter = Counter();
+    super.initState();
+  }
 
   void _incrementCounter() {
     setState(() {
-      _counter++;
+      _counter.increment();
     });
   }
 
