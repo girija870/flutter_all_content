@@ -1,18 +1,75 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flut_all_content/app/app.dart';
-import 'package:flut_all_content/presentation/resources/language_manager.dart';
+import 'package:flut_all_content/album/album_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 
-import 'app/di.dart';
+void main() {
+  runApp(const MyApp());
+}
 
-void main() async {
-  WidgetsFlutterBinding
-      .ensureInitialized(); //generally prevent null exception so make sure that neccessary widget is binding.
-  await EasyLocalization.ensureInitialized();
-  await initAppModule();
-  runApp(EasyLocalization(
-      child: Phoenix(child: MyApp()),
-      supportedLocales: const [ENGLISH_LOCAL, NEPALI_LOCAL],
-      path: ASSETS_PATH_LOCALIZATION));
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'You have pushed the button this many times:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+            TextButton(
+                onPressed: () {
+                  //navigate to album page
+                  MaterialPageRoute(builder: (context) => const AlbumView());
+                },
+                child: const Text("GoToAlbumPage"))
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
 }
