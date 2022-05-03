@@ -22,7 +22,7 @@ main() {
     //swipe the item to dismiss it
     await tester.drag(find.byType(Dismissible), const Offset(500.0, 0.0));
 
-    //Build  the widget untill the dissmiss animation ends
+    //Build  the widget until the dismiss animation ends
     await tester.pumpAndSettle();
 
     //ensure that the item is no longer on screen
