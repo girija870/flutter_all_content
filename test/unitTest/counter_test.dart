@@ -1,4 +1,4 @@
-import 'package:flut_all_content/counter.dart';
+import 'package:flut_all_content/counter/counter.dart';
 import 'package:test/test.dart';
 
 main() {

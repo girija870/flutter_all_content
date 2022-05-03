@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../album_provider.dart';
-import '../model/album.dart';
+import 'album_provider.dart';
+import 'model/album.dart';
 
 class AlbumView extends StatefulWidget {
   const AlbumView({Key? key}) : super(key: key);

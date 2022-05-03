@@ -1,5 +1,5 @@
-import 'package:flut_all_content/album_provider.dart';
-import 'package:flut_all_content/model/album.dart';
+import 'package:flut_all_content/album/album_provider.dart';
+import 'package:flut_all_content/album/model/album.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
