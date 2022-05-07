@@ -1,3 +1,4 @@
+import 'package:flut_all_content/screens/home.dart';
 import 'package:flut_all_content/screens/sandbox.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SandBox(),
+      home: const Home(),
     );
   }
 }

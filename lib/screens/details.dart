@@ -9,6 +9,8 @@ class Details extends StatelessWidget {
 
   Details({required this.trip});
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,11 +24,14 @@ class Details extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               ClipRRect(
-                  child: Image.asset(
-                    'assets/images/${trip.img}',
-                    height: 360,
-                    fit: BoxFit.cover,
-                    alignment: Alignment.topCenter,
+                  child: Hero(
+                    tag: 'loc-img${trip.img}',
+                    child: Image.asset(
+                      'assets/images/${trip.img}',
+                      height: 360,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
+                    ),
                   )
               ),
               const SizedBox(height: 30),
