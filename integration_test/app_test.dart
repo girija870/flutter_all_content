@@ -9,6 +9,7 @@ main() {
     testWidgets('tap on floating action button, verify counter',
         (WidgetTester tester) async {
       app.main();
+
       await tester.pumpAndSettle(); //rebuild continuous untill button preccced
 
       //verify the punter start at 0

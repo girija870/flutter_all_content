@@ -3,6 +3,7 @@ import 'package:flut_all_content/counter/counter.dart';
 import 'package:flut_all_content/mock_list_page.dart';
 import 'package:flutter/material.dart';
 
+import '../reverse_string_page.dart';
 import '../todo_list_page.dart';
 
 class CounterPage extends StatefulWidget {
@@ -81,7 +82,17 @@ class _MyHomePageState extends State<CounterPage> {
                             MaterialPageRoute(
                                 builder: (context) => const TodoListPage()));
                       },
-                      child: const Text("GoToToDoListPage"))
+                      child: const Text("GoToToDoListPage")),
+                  TextButton(
+                      onPressed: () {
+                        //navigate to album page
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const ReverseStringPage()));
+                      },
+                      child: const Text("GoToToReverseStringPage"))
                 ],
               )
             ],
