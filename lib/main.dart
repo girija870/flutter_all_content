@@ -1,5 +1,4 @@
-
-import 'package:flut_all_content/counter/counter_page.dart';
+import 'package:flut_all_content/screens/sandbox.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,9 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const CounterPage(title: 'Flutter Demo Home Page'),
+      home: const SandBox(),
     );
   }
 }
-
-
