@@ -24,13 +24,13 @@ main() {
     test('reverse the string', () async {
       await driver!.tap(textButton);
       await driver!.tap(textFiled);
-      await Future.delayed(const Duration(seconds: 2));
+      // await Future.delayed(const Duration(seconds: 2));
       await driver!.enterText('Hello');
-      await Future.delayed(const Duration(seconds: 2));
+      // await Future.delayed(const Duration(seconds: 2));
 
       await driver!.waitForAbsent(reverse);
       await driver!.tap(button);
-      await Future.delayed(const Duration(seconds: 2));
+      // await Future.delayed(const Duration(seconds: 2));
 
       await driver!.waitFor(reverse);
       await driver!.waitUntilNoTransientCallbacks();
