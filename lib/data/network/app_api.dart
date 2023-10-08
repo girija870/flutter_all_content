@@ -35,5 +35,4 @@ abstract class AppServiceClient {
 
   @GET("/singleStoreDetails/1")
   Future<SingleStoreDetailsResponse> fetchSingleStoreDetails();
-
 }

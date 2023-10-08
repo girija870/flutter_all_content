@@ -5,7 +5,6 @@ class Failure {
   String message;
 
   Failure(this.code, this.message); // success / failure
-
 }
 
 class DefaultFailure extends Failure {

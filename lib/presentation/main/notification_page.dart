@@ -12,7 +12,7 @@ class NotificationPage extends StatefulWidget {
 class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
-    return  Center(
+    return Center(
       child: Text(AppStrings.notifications.tr()),
     );
   }

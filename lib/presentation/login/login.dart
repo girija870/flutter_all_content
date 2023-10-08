@@ -37,7 +37,7 @@ class _LoginViewState extends State<LoginView> {
     //navigate to main screen
     _loginViewModel.isUserLoggedInSuccessfullyStreamController.stream
         .listen((token) {
-      SchedulerBinding.instance?.addPostFrameCallback((_) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
         _appPreferences.setUserLoggedIn();
         _appPreferences.setUserToken(token);
         resetModules();
@@ -162,7 +162,7 @@ class _LoginViewState extends State<LoginView> {
                             context, Routes.forgotPasswordRoute);
                       },
                       child: Text(AppStrings.forgetPassword.tr(),
-                          style: Theme.of(context).textTheme.subtitle2),
+                          style: Theme.of(context).textTheme.titleSmall),
                     ),
                     TextButton(
                         onPressed: () {
@@ -172,7 +172,7 @@ class _LoginViewState extends State<LoginView> {
                         child: FittedBox(
                           fit: BoxFit.cover,
                           child: Text(AppStrings.registerText.tr(),
-                              style: Theme.of(context).textTheme.subtitle2),
+                              style: Theme.of(context).textTheme.titleSmall),
                         ))
                   ],
                 ),
