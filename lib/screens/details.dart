@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lipsum/lipsum.dart' as lipsum;
 
 import '../model/trip.dart';
 import '../shared/heart.dart';
@@ -8,8 +7,6 @@ class Details extends StatelessWidget {
   final Trip trip;
 
   Details({required this.trip});
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -25,43 +22,32 @@ class Details extends StatelessWidget {
             children: <Widget>[
               ClipRRect(
                   child: Hero(
-                    tag: 'loc-img${trip.img}',
-                    child: Image.asset(
-                      'assets/images/${trip.img}',
-                      height: 360,
-                      fit: BoxFit.cover,
-                      alignment: Alignment.topCenter,
-                    ),
-                  )
-              ),
+                tag: 'loc-img${trip.img}',
+                child: Image.asset(
+                  'assets/images/${trip.img}',
+                  height: 360,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.topCenter,
+                ),
+              )),
               const SizedBox(height: 30),
               ListTile(
-                  title: Text(
-                      trip.title,
+                  title: Text(trip.title,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
-                          color: Colors.grey[800]
-                      )
-                  ),
+                          color: Colors.grey[800])),
                   subtitle: Text(
                       '${trip.nights} night stay for only \$${trip.price}',
-                      style: const TextStyle(letterSpacing: 1)
-                  ),
-                  trailing: Heart()
-              ),
+                      style: const TextStyle(letterSpacing: 1)),
+                  trailing: Heart()),
               Padding(
                   padding: const EdgeInsets.all(18),
                   child: Text(
-                      lipsum.createText(numParagraphs: 1, numSentences: 3),
-                      style: TextStyle(
-                          color: Colors.grey[600],
-                          height: 1.4
-                      )
-                  )
-              ),
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget fermentum aliquam, leo nisl ultricies odio, quis',
+                      style: TextStyle(color: Colors.grey[600], height: 1.4))),
             ],
           ),
-        )
-    );  }
+        ));
+  }
 }
