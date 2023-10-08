@@ -18,7 +18,7 @@ class ScreenTitle extends StatelessWidget {
         );
       },
       curve: Curves.easeIn,
-      duration: const Duration(seconds:2),
+      duration: const Duration(seconds: 2),
       tween: Tween<double>(begin: 0, end: 1),
       child: Text(
         text,
