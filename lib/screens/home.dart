@@ -22,11 +22,11 @@ class _HomeState extends State<Home> {
                   fit: BoxFit.fitWidth,
                   alignment: Alignment.topLeft),
             ),
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const SizedBox(height: 30),
-                const SizedBox(
+                SizedBox(height: 30),
+                SizedBox(
                   height: 160,
                   child: ScreenTitle(
                     text: 'Ninja Trips',
