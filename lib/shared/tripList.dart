@@ -4,6 +4,8 @@ import '../model/trip.dart';
 import '../screens/details.dart';
 
 class TripList extends StatefulWidget {
+  const TripList({super.key});
+
   @override
   _TripListState createState() => _TripListState();
 }
@@ -15,7 +17,7 @@ class _TripListState extends State<TripList> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _addTrips();
     });
   }
