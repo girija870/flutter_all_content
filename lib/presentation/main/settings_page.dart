@@ -30,7 +30,7 @@ class _SettingsPageState extends State<SettingsPage> {
       children: [
         ListTile(
           title: Text(AppStrings.changeLanguage.tr(),
-              style: Theme.of(context).textTheme.headline4),
+              style: Theme.of(context).textTheme.headlineMedium),
           leading: SvgPicture.asset(ImagesAssets.changeLangIc),
           trailing: SvgPicture.asset(ImagesAssets.settingsRightArrowIc),
           onTap: () {
@@ -40,7 +40,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ListTile(
           title: Text(
             AppStrings.contactUs.tr(),
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
           leading: SvgPicture.asset(ImagesAssets.contactUsIc),
           trailing: SvgPicture.asset(ImagesAssets.settingsRightArrowIc),
@@ -50,7 +50,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         ListTile(
           title: Text(AppStrings.inviteYourFriends.tr(),
-              style: Theme.of(context).textTheme.headline4),
+              style: Theme.of(context).textTheme.headlineMedium),
           leading: SvgPicture.asset(ImagesAssets.inviteFriendIc),
           trailing: SvgPicture.asset(ImagesAssets.settingsRightArrowIc),
           onTap: () {
@@ -59,7 +59,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         ListTile(
           title: Text(AppStrings.logout.tr(),
-              style: Theme.of(context).textTheme.headline4),
+              style: Theme.of(context).textTheme.headlineMedium),
           leading: SvgPicture.asset(ImagesAssets.logoutIc),
           trailing: SvgPicture.asset(ImagesAssets.settingsRightArrowIc),
           onTap: () {
@@ -76,8 +76,10 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _contactUs() {
-    const WebView(
-      initialUrl: "https://www.linkedin.com/in/girija-gurung-986157167",
+    WebViewWidget(
+      controller: WebViewController()
+        ..loadRequest(
+            Uri.parse("https://www.linkedin.com/in/girija-gurung-986157167")),
     );
   }
 

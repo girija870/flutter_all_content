@@ -48,7 +48,7 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   }
 
   @override
-  Future<SingleStoreDetailsResponse> fetchSingleStoreDetails() async{
+  Future<SingleStoreDetailsResponse> fetchSingleStoreDetails() async {
     return await _appServiceClient.fetchSingleStoreDetails();
   }
 }

@@ -60,7 +60,7 @@ class _RegisterViewState extends State<RegisterView> {
     _registerViewModel.isUserRegisteredSuccessfullyStreamController.stream
         .listen((isRegisteredSuccess) {
       //navigate to main screen
-      SchedulerBinding.instance?.addPostFrameCallback((_) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
         _appPreferences.setUserLoggedIn();
         Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
       });
@@ -238,7 +238,7 @@ class _RegisterViewState extends State<RegisterView> {
                                   _registerViewModel.register();
                                 }
                               : null,
-                          child:  Text(AppStrings.registerText.tr())),
+                          child: Text(AppStrings.registerText.tr())),
                     );
                   },
                 ),
@@ -254,7 +254,7 @@ class _RegisterViewState extends State<RegisterView> {
                     Navigator.pushReplacementNamed(context, Routes.loginRoute);
                   },
                   child: Text(AppStrings.haveAccount.tr(),
-                      style: Theme.of(context).textTheme.subtitle2),
+                      style: Theme.of(context).textTheme.titleSmall),
                 ),
               ),
             ],
@@ -270,7 +270,7 @@ class _RegisterViewState extends State<RegisterView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-           Flexible(child: Text(AppStrings.profilePicture.tr())),
+          Flexible(child: Text(AppStrings.profilePicture.tr())),
           Flexible(
             child: StreamBuilder<File?>(
               stream: _registerViewModel.outputIsProfilePictureValid,
@@ -303,7 +303,7 @@ class _RegisterViewState extends State<RegisterView> {
               ListTile(
                 trailing: const Icon(Icons.arrow_forward),
                 leading: const Icon(Icons.camera),
-                title:  Text(AppStrings.photoGalley.tr()),
+                title: Text(AppStrings.photoGalley.tr()),
                 onTap: () {
                   _imageFormGallery();
                   Navigator.of(context).pop();
@@ -312,7 +312,7 @@ class _RegisterViewState extends State<RegisterView> {
               ListTile(
                 trailing: const Icon(Icons.arrow_forward),
                 leading: const Icon(Icons.camera_alt_rounded),
-                title:  Text(AppStrings.photoCamera.tr()),
+                title: Text(AppStrings.photoCamera.tr()),
                 onTap: () {
                   _imageFormCamera();
                   Navigator.of(context).pop();

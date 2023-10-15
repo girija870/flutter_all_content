@@ -24,9 +24,7 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       controller: controller,
       decoration: InputDecoration(
-          hintText: hintText,
-          labelText: labelText,
-          errorText: errorText),
+          hintText: hintText, labelText: labelText, errorText: errorText),
     );
   }
 }

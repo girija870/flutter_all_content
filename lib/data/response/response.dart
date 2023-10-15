@@ -200,8 +200,8 @@ class SingleStoreDetailsResponse extends BaseResponse {
   @JsonKey(name: "about")
   String? about;
 
-  SingleStoreDetailsResponse(this.id, this.storeTitle, this.storeImage, this.services,
-      this.details, this.about);
+  SingleStoreDetailsResponse(this.id, this.storeTitle, this.storeImage,
+      this.services, this.details, this.about);
 
   //fromJson
   factory SingleStoreDetailsResponse.fromJson(Map<String, dynamic> json) =>

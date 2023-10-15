@@ -8,7 +8,6 @@ const CACHE_HOME_INTERVAL = 60 * 1000; // 1 minute in milliseconds
 const CACHE_STORE_DETAILS_KEY = "CACHE_STORE_DETAILS_KEY";
 const CACHE_STORE_DETAILS_INTERVAL = 60 * 1000; // 1 minute in milliseconds
 
-
 abstract class LocalDataSource {
   Future<HomeDetailsResponse> fetchHomeDetails();
 
@@ -59,7 +58,8 @@ class LocalDataSourceImplementer implements LocalDataSource {
   @override
   Future<SingleStoreDetailsResponse> fetchSingleStoreDetails() {
     CachedItem? cachedItem = cacheMap[CACHE_STORE_DETAILS_KEY];
-    if (cachedItem != null && cachedItem.isValid(CACHE_STORE_DETAILS_INTERVAL)) {
+    if (cachedItem != null &&
+        cachedItem.isValid(CACHE_STORE_DETAILS_INTERVAL)) {
       //return the response from the cache
       return cachedItem.data;
     } else {

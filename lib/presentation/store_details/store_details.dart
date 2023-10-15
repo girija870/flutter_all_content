@@ -52,7 +52,7 @@ class _StoreDetailsViewState extends State<StoreDetailsView> {
     return Scaffold(
       backgroundColor: ColorManager.white,
       appBar: AppBar(
-        title:  Text(AppStrings.storeDetails.tr()),
+        title: Text(AppStrings.storeDetails.tr()),
         elevation: AppSize.s0,
         iconTheme: IconThemeData(
             //back button
@@ -108,7 +108,7 @@ class _StoreDetailsViewState extends State<StoreDetailsView> {
           bottom: AppPadding.p2),
       child: Text(
         title,
-        style: Theme.of(context).textTheme.headline3,
+        style: Theme.of(context).textTheme.displaySmall,
       ),
     );
   }
@@ -118,7 +118,7 @@ class _StoreDetailsViewState extends State<StoreDetailsView> {
       padding: const EdgeInsets.all(AppPadding.p12),
       child: Text(
         details,
-        style: Theme.of(context).textTheme.bodyText2,
+        style: Theme.of(context).textTheme.bodyMedium,
       ),
     );
   }

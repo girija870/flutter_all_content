@@ -6,6 +6,7 @@ import 'package:flut_all_content/presentation/base/base_view_model.dart';
 import '../resources/assets_manager.dart';
 import '../resources/strings_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
+
 class OnBoardingViewModel extends BaseViewModel
     with OnBoardingViewModelInputs, OnBoardingViewModelOutputs {
   late final List<SliderObject> _list;
@@ -86,7 +87,8 @@ abstract class OnBoardingViewModelInputs {
   void goPrevious(); // when user clicks on left arrow or swipe  right
   void onPageChanged(int index);
 
-  Sink get inputSliderViewObject; // this is the way to add data to the stream ..stream input
+  Sink
+      get inputSliderViewObject; // this is the way to add data to the stream ..stream input
 }
 
 //outputs mean data or results that will be sent from our view model to our view

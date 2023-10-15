@@ -113,7 +113,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                     _forgotPasswordViewModel.forgotPassword();
                   },
                   child: Text(AppStrings.forgetPassword,
-                      style: Theme.of(context).textTheme.subtitle2),
+                      style: Theme.of(context).textTheme.titleSmall),
                 ),
               ),
             ],

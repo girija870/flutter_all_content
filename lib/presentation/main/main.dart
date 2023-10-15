@@ -36,12 +36,11 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    return
-      Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Text(
             _title,
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),
         body: pages[_currentIndex],
@@ -54,16 +53,18 @@ class _MainViewState extends State<MainView> {
               unselectedItemColor: ColorManager.grey,
               currentIndex: _currentIndex,
               onTap: onTap,
-              items:  [
+              items: [
                 BottomNavigationBarItem(
                     icon: const Icon(Icons.home), label: AppStrings.home.tr()),
                 BottomNavigationBarItem(
-                    icon: const Icon(Icons.search), label: AppStrings.search.tr()),
+                    icon: const Icon(Icons.search),
+                    label: AppStrings.search.tr()),
                 BottomNavigationBarItem(
                     icon: const Icon(Icons.notifications),
                     label: AppStrings.notifications.tr()),
                 BottomNavigationBarItem(
-                    icon: const Icon(Icons.settings), label: AppStrings.settings.tr()),
+                    icon: const Icon(Icons.settings),
+                    label: AppStrings.settings.tr()),
               ]),
         ));
   }

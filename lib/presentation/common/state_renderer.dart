@@ -28,7 +28,7 @@ class StateRenderer extends StatelessWidget {
   final String title;
   final Function? retryActionFunction;
 
-   StateRenderer(
+  StateRenderer(
       {Key? key,
       required this.stateRendererType,
       String? message,
