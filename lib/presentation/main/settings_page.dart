@@ -76,8 +76,10 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _contactUs() {
-    const WebView(
-      initialUrl: "https://www.linkedin.com/in/girija-gurung-986157167",
+    WebViewWidget(
+      controller: WebViewController()
+        ..loadRequest(
+            Uri.parse("https://www.linkedin.com/in/girija-gurung-986157167")),
     );
   }
 
